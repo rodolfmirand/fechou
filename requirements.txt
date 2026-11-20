@@ -14,12 +14,22 @@ markdown-it-py==4.3.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
+numpy==2.5.5
+    # via pandas
+pandas==3.1.1
+    # via fechou (pyproject.toml)
 pydantic==2.14.4
-    # via typer
+    # via
+    #   fechou (pyproject.toml)
+    #   typer
 pydantic-core==2.50.5
     # via pydantic
 pygments==2.21.0
     # via rich
+python-dateutil==4.0.0
+    # via pandas
+pyyaml==6.0.3
+    # via fechou (pyproject.toml)
 rich==15.0.0
     # via typer
 shellingham==1.5.4
@@ -33,3 +43,7 @@ typing-extensions==4.16.0
     #   typing-inspection
 typing-inspection==0.4.5
     # via pydantic
+tzdata==2026.6
+    # via
+    #   pandas
+    #   python-dateutil

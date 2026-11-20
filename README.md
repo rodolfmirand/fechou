@@ -2,7 +2,7 @@
 
 Relatório semanal automático a partir de planilhas: lê CSV ou Google Sheets, calcula os indicadores da semana, gera um PDF e envia por e-mail ou Telegram.
 
-> 🚧 **Status: em desenvolvimento (Fase 0 concluída).** Já existem a estrutura do projeto, o lint, a checagem de tipos, os testes e o CI. As funcionalidades abaixo ainda são planejadas.
+> 🚧 **Status: em desenvolvimento (Fases 0 e 1 concluídas).** Já existem a leitura de CSV, a validação da planilha (`fechou validate`) e os dados de demonstração. Relatório, PDF e entrega ainda são planejados.
 
 ## Problema
 
@@ -30,6 +30,7 @@ O Fechou automatiza o ciclo inteiro: **ler → validar → calcular → gerar PD
 | Linguagem | Python 3.12 |
 | CLI | Typer |
 | Dados | pandas, Pydantic v2 |
+| Configuração | YAML (PyYAML) |
 | Google Sheets | gspread |
 | Relatório | Jinja2 + WeasyPrint |
 | Persistência | SQLite |
@@ -79,25 +80,62 @@ Detalhes em [`docs/decisions/0001-dependency-locking-with-pip-tools.md`](./docs/
 
 ## Como usar
 
-Já funciona:
+### Já funciona
 
 ```text
 fechou --version
-fechou --help
+fechou validate --config examples/config.example.yaml
 ```
 
-Os comandos abaixo são o **desenho planejado** e ainda não existem. Esta seção será atualizada ao longo da implementação.
+O `validate` lê a planilha, aplica as regras de validação e lista as linhas descartadas com o motivo, sem gerar nem enviar nada. Ele sai com código `0` quando tudo é válido e `1` quando há linhas inválidas ou erro de configuração. Exemplo com o CSV de demonstração, que tem 6 linhas quebradas de propósito:
 
 ```text
-fechou demo
-fechou validate --config config.yaml
-fechou run --config config.yaml [--dry-run] [--force]
+Fonte: loja-demo (csv)
+Linhas lidas: 785
+Válidas: 779
+Inválidas: 6
+
+Linhas com problema (serão descartadas do relatório):
+  - linha 15: Produto: campo obrigatório vazio
+  - linha 27: Qtd: deve ser um número inteiro maior que zero (valor: '0')
+  - linha 111: Preço: valor numérico inválido 'abc'
+  ...
+```
+
+### Configuração
+
+Copie [`examples/config.example.yaml`](./examples/config.example.yaml) e ajuste. Caminhos relativos são resolvidos a partir da pasta do arquivo de configuração. A seção `columns` liga os nomes internos (`date`, `product`, `category`, `quantity`, `unit_price`, `seller`) aos nomes das colunas da sua planilha. `category` e `seller` são opcionais.
+
+Formatos aceitos nas células:
+
+| Campo | Aceita | Rejeita |
+|---|---|---|
+| Data | `12/11/2026`, `2026-11-12` | `31/02/2026`, `12-11-2026` |
+| Quantidade | inteiro > 0 | `0`, `-1`, `2,5` |
+| Preço | `49,90`, `49.90`, `R$ 1.234,56`, `1,234.56` | negativos, texto, mais de 2 casas (`1.234` é ambíguo) |
+
+### Dados de demonstração
+
+O arquivo `examples/vendas_demo.csv` é **fictício** e reprodutível (semente fixa). Para regenerá-lo:
+
+```bash
+python scripts/generate_demo_data.py [--start 2026-09-07] [--end 2026-11-15] [--seed 42] [--invalid 6]
+```
+
+### Planejado
+
+Os comandos abaixo ainda **não existem**. Esta seção será atualizada ao longo da implementação.
+
+```text
+fechou demo [--output ./out]
+fechou run --config config.yaml [--start AAAA-MM-DD --end AAAA-MM-DD] [--dry-run] [--force]
+fechou init-config [--output config.yaml]
 ```
 
 ## Roadmap
 
 - [x] Fase 0: estrutura do projeto, lint, testes e CI
-- [ ] Fase 1: modelos, leitura de CSV, validação e dados de demonstração
+- [x] Fase 1: modelos, leitura de CSV, validação e dados de demonstração
 - [ ] Fase 2: cálculo de período e indicadores
 - [ ] Fase 3: relatório em PDF e comando `demo`
 - [ ] Fase 4: entrega por e-mail, idempotência e registro de execuções

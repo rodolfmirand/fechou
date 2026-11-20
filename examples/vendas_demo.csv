@@ -1,0 +1,786 @@
+Data,Produto,Categoria,Qtd,Preço,Vendedor
+07/09/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+07/09/2026,Cinto de couro,Acessórios,1,"74,90",Ana
+07/09/2026,Camiseta básica,Vestuário,1,"49,90",Bruno
+07/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+2026-09-07,Mochila,Acessórios,2,"199,90",Diego
+07/09/2026,Vestido midi,Vestuário,1,"139,90",Ana
+07/09/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+07/09/2026,Mochila,Acessórios,1,"199,90",Diego
+07/09/2026,Camiseta estampada,Vestuário,3,"69,90",Carla
+07/09/2026,Boné,Acessórios,1,"44,90",Carla
+08/09/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+08/09/2026,Calça jeans,Vestuário,1,"159,90",Ana
+08/09/2026,Boné,Acessórios,1,"44,90",Diego
+08/09/2026,,Calçados,4,"249,90",Bruno
+08/09/2026,Cinto de couro,Acessórios,2,"74,90",Ana
+08/09/2026,Mochila,Acessórios,1,"199,90",Carla
+09/09/2026,Cinto de couro,Acessórios,3,"74,90",Bruno
+09/09/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+09/09/2026,Boné,Acessórios,1,44.90,Diego
+09/09/2026,Camiseta estampada,Vestuário,3,"69,90",Bruno
+09/09/2026,Mochila,Acessórios,2,"199,90",Diego
+09/09/2026,Chinelo,Calçados,2,34.90,Ana
+2026-09-09,Cinto de couro,Acessórios,2,"74,90",Carla
+09/09/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+10/09/2026,Mochila,Acessórios,4,199.90,Carla
+10/09/2026,Óculos de sol,Acessórios,0,"119,90",Bruno
+2026-09-10,Chinelo,Calçados,4,34.90,Carla
+10/09/2026,Sandália rasteira,Calçados,4,79.90,Carla
+10/09/2026,Bermuda de sarja,Vestuário,3,89.90,Ana
+10/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+10/09/2026,Calça jeans,Vestuário,4,"159,90",Diego
+2026-09-10,Bermuda de sarja,Vestuário,2,"89,90",Carla
+2026-09-10,Tênis casual,Calçados,2,"249,90",Diego
+10/09/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+10/09/2026,Boné,Acessórios,1,"44,90",Bruno
+2026-09-10,Camiseta estampada,Vestuário,3,"69,90",Bruno
+11/09/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+11/09/2026,Bermuda de sarja,Vestuário,3,"89,90",Ana
+11/09/2026,Cinto de couro,Acessórios,1,"74,90",Ana
+11/09/2026,Cinto de couro,Acessórios,2,"74,90",Carla
+2026-09-11,Mochila,Acessórios,1,"199,90",Diego
+11/09/2026,Calça jeans,Vestuário,1,"159,90",Ana
+11/09/2026,Sandália rasteira,Calçados,3,"79,90",Ana
+2026-09-11,Camiseta estampada,Vestuário,3,"69,90",Diego
+11/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+2026-09-11,Camiseta básica,Vestuário,1,"49,90",Diego
+11/09/2026,Moletom com capuz,Vestuário,4,189.90,Diego
+11/09/2026,Calça jeans,Vestuário,1,"159,90",Ana
+11/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+2026-09-11,Camiseta básica,Vestuário,1,"49,90",Ana
+12/09/2026,Óculos de sol,Acessórios,1,119.90,Bruno
+12/09/2026,Boné,Acessórios,2,"44,90",Carla
+12/09/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+12/09/2026,Calça jeans,Vestuário,1,"159,90",Ana
+12/09/2026,Camiseta básica,Vestuário,5,49.90,Ana
+12/09/2026,Chinelo,Calçados,1,34.90,Ana
+12/09/2026,Bermuda de sarja,Vestuário,1,89.90,Carla
+2026-09-12,Boné,Acessórios,3,"44,90",Carla
+12/09/2026,Cinto de couro,Acessórios,3,"74,90",Ana
+12/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+12/09/2026,Bermuda de sarja,Vestuário,3,"89,90",Carla
+12/09/2026,Óculos de sol,Acessórios,2,119.90,Ana
+12/09/2026,Camiseta básica,Vestuário,1,49.90,Bruno
+12/09/2026,Meia (kit com 3),Acessórios,2,"29,90",Ana
+2026-09-12,Camiseta estampada,Vestuário,2,"69,90",Ana
+12/09/2026,Óculos de sol,Acessórios,2,"119,90",Ana
+12/09/2026,Moletom com capuz,Vestuário,4,189.90,Ana
+12/09/2026,Vestido midi,Vestuário,1,"139,90",Diego
+12/09/2026,Boné,Acessórios,4,"44,90",Bruno
+12/09/2026,Mochila,Acessórios,3,"199,90",Carla
+13/09/2026,Tênis casual,Calçados,3,249.90,Carla
+13/09/2026,Calça jeans,Vestuário,1,159.90,Diego
+13/09/2026,Bermuda de sarja,Vestuário,4,"89,90",Bruno
+13/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+13/09/2026,Mochila,Acessórios,2,"199,90",Carla
+13/09/2026,Camiseta básica,Vestuário,5,"49,90",Carla
+13/09/2026,Camiseta básica,Vestuário,1,"49,90",Carla
+13/09/2026,Tênis casual,Calçados,1,"249,90",Bruno
+13/09/2026,Moletom com capuz,Vestuário,1,"189,90",Bruno
+14/09/2026,Tênis casual,Calçados,2,"249,90",Carla
+14/09/2026,Cinto de couro,Acessórios,2,"74,90",Carla
+14/09/2026,Cinto de couro,Acessórios,1,"74,90",Bruno
+14/09/2026,Bermuda de sarja,Vestuário,4,"89,90",Bruno
+14/09/2026,Boné,Acessórios,1,44.90,Carla
+14/09/2026,Moletom com capuz,Vestuário,2,"189,90",Carla
+14/09/2026,Sandália rasteira,Calçados,2,"79,90",Bruno
+15/09/2026,Camiseta estampada,Vestuário,2,"69,90",Ana
+2026-09-15,Óculos de sol,Acessórios,1,"119,90",Bruno
+15/09/2026,Calça jeans,Vestuário,1,"159,90",Ana
+15/09/2026,Sandália rasteira,Calçados,2,"79,90",Diego
+15/09/2026,Sandália rasteira,Calçados,1,"79,90",Ana
+15/09/2026,Mochila,Acessórios,1,199.90,Diego
+15/09/2026,Camiseta básica,Vestuário,4,"49,90",Bruno
+15/09/2026,Mochila,Acessórios,1,"199,90",Carla
+2026-09-15,Mochila,Acessórios,2,"199,90",Diego
+2026-09-15,Óculos de sol,Acessórios,1,"119,90",Diego
+15/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+16/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Carla
+16/09/2026,Vestido midi,Vestuário,1,"139,90",Bruno
+16/09/2026,Tênis casual,Calçados,2,"249,90",Diego
+16/09/2026,Vestido midi,Vestuário,1,"139,90",Diego
+2026-09-16,Tênis casual,Calçados,2,"249,90",Diego
+16/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+16/09/2026,Chinelo,Calçados,1,"34,90",Bruno
+16/09/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+16/09/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+2026-09-16,Calça jeans,Vestuário,1,159.90,Ana
+16/09/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+16/09/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+2026-09-17,Mochila,Acessórios,1,abc,Diego
+17/09/2026,Camiseta básica,Vestuário,1,49.90,Bruno
+17/09/2026,Cinto de couro,Acessórios,4,"74,90",Ana
+17/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Bruno
+17/09/2026,Sandália rasteira,Calçados,2,"79,90",Carla
+17/09/2026,Mochila,Acessórios,2,199.90,Ana
+17/09/2026,Mochila,Acessórios,5,"199,90",Ana
+17/09/2026,Moletom com capuz,Vestuário,4,"189,90",Bruno
+17/09/2026,Camiseta estampada,Vestuário,3,"69,90",Carla
+17/09/2026,Óculos de sol,Acessórios,3,"119,90",Ana
+18/09/2026,Chinelo,Calçados,1,"34,90",Carla
+18/09/2026,Camiseta básica,Vestuário,3,"49,90",Carla
+2026-09-18,Cinto de couro,Acessórios,1,"74,90",Bruno
+18/09/2026,Meia (kit com 3),Acessórios,2,"29,90",Diego
+18/09/2026,Sandália rasteira,Calçados,2,"79,90",Bruno
+2026-09-18,Óculos de sol,Acessórios,1,"119,90",Diego
+18/09/2026,Boné,Acessórios,1,"44,90",Carla
+18/09/2026,Calça jeans,Vestuário,1,"159,90",Carla
+18/09/2026,Boné,Acessórios,1,"44,90",Bruno
+18/09/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+18/09/2026,Meia (kit com 3),Acessórios,2,"29,90",Ana
+18/09/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+18/09/2026,Sandália rasteira,Calçados,1,79.90,Carla
+18/09/2026,Vestido midi,Vestuário,1,"139,90",Ana
+19/09/2026,Bermuda de sarja,Vestuário,2,89.90,Bruno
+19/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Carla
+19/09/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+19/09/2026,Camiseta básica,Vestuário,1,"49,90",Ana
+19/09/2026,Chinelo,Calçados,4,"34,90",Diego
+2026-09-19,Camiseta estampada,Vestuário,2,"69,90",Diego
+19/09/2026,Vestido midi,Vestuário,1,139.90,Diego
+19/09/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+19/09/2026,Calça jeans,Vestuário,2,"159,90",Bruno
+19/09/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+19/09/2026,Mochila,Acessórios,1,"199,90",Diego
+19/09/2026,Moletom com capuz,Vestuário,1,189.90,Ana
+19/09/2026,Mochila,Acessórios,1,"199,90",Bruno
+19/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Diego
+19/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+31/02/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+19/09/2026,Mochila,Acessórios,2,199.90,Bruno
+19/09/2026,Tênis casual,Calçados,1,"249,90",Carla
+19/09/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+19/09/2026,Sandália rasteira,Calçados,2,"79,90",Carla
+20/09/2026,Chinelo,Calçados,1,"34,90",Diego
+20/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Ana
+20/09/2026,Mochila,Acessórios,1,"199,90",Bruno
+20/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+20/09/2026,Cinto de couro,Acessórios,5,"74,90",Diego
+20/09/2026,Vestido midi,Vestuário,1,"139,90",Diego
+20/09/2026,Meia (kit com 3),Acessórios,2,"29,90",Ana
+21/09/2026,Camiseta estampada,Vestuário,1,69.90,Diego
+21/09/2026,Óculos de sol,Acessórios,5,"119,90",Diego
+21/09/2026,Tênis casual,Calçados,1,"249,90",Diego
+21/09/2026,Cinto de couro,Acessórios,1,"74,90",Bruno
+21/09/2026,Moletom com capuz,Vestuário,2,"189,90",Bruno
+21/09/2026,Meia (kit com 3),Acessórios,2,"29,90",Ana
+2026-09-21,Bermuda de sarja,Vestuário,4,"89,90",Ana
+21/09/2026,Cinto de couro,Acessórios,1,"74,90",Carla
+22/09/2026,Óculos de sol,Acessórios,1,"119,90",Bruno
+22/09/2026,Tênis casual,Calçados,2,"249,90",Bruno
+22/09/2026,Óculos de sol,Acessórios,2,119.90,Carla
+22/09/2026,Mochila,Acessórios,3,"199,90",Carla
+22/09/2026,Óculos de sol,Acessórios,5,"119,90",Bruno
+22/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+2026-09-22,Sandália rasteira,Calçados,3,79.90,Bruno
+22/09/2026,Boné,Acessórios,3,"44,90",Carla
+22/09/2026,Meia (kit com 3),Acessórios,4,"29,90",Bruno
+23/09/2026,Camiseta básica,Vestuário,5,"49,90",Ana
+23/09/2026,Óculos de sol,Acessórios,1,119.90,Ana
+23/09/2026,Meia (kit com 3),Acessórios,3,29.90,Ana
+23/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+23/09/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+23/09/2026,Vestido midi,Vestuário,3,"139,90",Ana
+23/09/2026,Boné,Acessórios,2,44.90,Bruno
+23/09/2026,Meia (kit com 3),Acessórios,5,"29,90",Ana
+23/09/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+23/09/2026,Mochila,Acessórios,1,"199,90",Bruno
+24/09/2026,Tênis casual,Calçados,2,"249,90",Ana
+2026-09-24,Boné,Acessórios,2,"44,90",Bruno
+24/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+24/09/2026,Mochila,Acessórios,1,"199,90",Ana
+2026-09-24,Sandália rasteira,Calçados,5,"79,90",Diego
+24/09/2026,Meia (kit com 3),Acessórios,3,"29,90",Diego
+24/09/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+24/09/2026,Meia (kit com 3),Acessórios,5,"29,90",Carla
+24/09/2026,Camiseta básica,Vestuário,2,"49,90",Ana
+24/09/2026,Boné,Acessórios,3,44.90,Bruno
+24/09/2026,Boné,Acessórios,1,"44,90",Carla
+24/09/2026,Cinto de couro,Acessórios,2,"74,90",Bruno
+2026-09-25,Camiseta estampada,Vestuário,2,"69,90",Diego
+25/09/2026,Camiseta básica,Vestuário,2,"49,90",Carla
+25/09/2026,Vestido midi,Vestuário,1,"139,90",Carla
+25/09/2026,Chinelo,Calçados,1,"34,90",Diego
+25/09/2026,Mochila,Acessórios,3,199.90,Diego
+25/09/2026,Camiseta estampada,Vestuário,5,69.90,Diego
+25/09/2026,Óculos de sol,Acessórios,1,"119,90",Ana
+25/09/2026,Moletom com capuz,Vestuário,1,"189,90",Carla
+25/09/2026,Boné,Acessórios,2,"44,90",Bruno
+25/09/2026,Sandália rasteira,Calçados,3,"79,90",Bruno
+25/09/2026,Cinto de couro,Acessórios,3,74.90,Carla
+25/09/2026,Cinto de couro,Acessórios,1,74.90,Carla
+25/09/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+25/09/2026,Sandália rasteira,Calçados,4,"79,90",Diego
+25/09/2026,Boné,Acessórios,1,"44,90",Ana
+25/09/2026,Óculos de sol,Acessórios,1,119.90,Ana
+25/09/2026,Meia (kit com 3),Acessórios,1,29.90,Carla
+26/09/2026,Cinto de couro,Acessórios,4,"74,90",Ana
+26/09/2026,Tênis casual,Calçados,5,249.90,Diego
+26/09/2026,Camiseta estampada,Vestuário,2,"69,90",Ana
+26/09/2026,Camiseta básica,Vestuário,1,"49,90",Bruno
+26/09/2026,Camiseta estampada,Vestuário,2,"69,90",Bruno
+26/09/2026,Vestido midi,Vestuário,2,"139,90",Carla
+2026-09-26,Óculos de sol,Acessórios,5,"119,90",Bruno
+26/09/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+26/09/2026,Boné,Acessórios,1,"44,90",Diego
+26/09/2026,Chinelo,Calçados,1,"34,90",Carla
+26/09/2026,Chinelo,Calçados,1,"34,90",Ana
+26/09/2026,Meia (kit com 3),Acessórios,3,"29,90",Diego
+2026-09-26,Cinto de couro,Acessórios,1,"74,90",Diego
+26/09/2026,Tênis casual,Calçados,1,249.90,Ana
+26/09/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+27/09/2026,Boné,Acessórios,1,"44,90",Ana
+27/09/2026,Mochila,Acessórios,3,"199,90",Bruno
+27/09/2026,Tênis casual,Calçados,1,"249,90",Diego
+27/09/2026,Tênis casual,Calçados,1,"249,90",Carla
+2026-09-27,Vestido midi,Vestuário,2,"139,90",Ana
+27/09/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+28/09/2026,Calça jeans,Vestuário,2,"159,90",Carla
+28/09/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+2026-09-28,Óculos de sol,Acessórios,1,"119,90",Carla
+28/09/2026,Vestido midi,Vestuário,1,"139,90",Diego
+28/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+28/09/2026,Mochila,Acessórios,1,"199,90",Ana
+2026-09-28,Boné,Acessórios,3,"44,90",Bruno
+28/09/2026,Moletom com capuz,Vestuário,1,"189,90",Ana
+2026-09-28,Calça jeans,Vestuário,2,"159,90",Bruno
+28/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+28/09/2026,Tênis casual,Calçados,1,"249,90",Carla
+29/09/2026,Boné,Acessórios,3,"44,90",Ana
+29/09/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+29/09/2026,Tênis casual,Calçados,2,"249,90",Diego
+29/09/2026,Camiseta estampada,Vestuário,2,"69,90",Carla
+29/09/2026,Camiseta básica,Vestuário,5,"49,90",Bruno
+2026-09-29,Moletom com capuz,Vestuário,2,"189,90",Carla
+29/09/2026,Vestido midi,Vestuário,1,"139,90",Bruno
+29/09/2026,Tênis casual,Calçados,1,"249,90",Carla
+29/09/2026,Camiseta estampada,Vestuário,2,"69,90",Diego
+2026-09-29,Camiseta estampada,Vestuário,2,"69,90",Diego
+29/09/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+29/09/2026,Óculos de sol,Acessórios,1,"119,90",Ana
+30/09/2026,Tênis casual,Calçados,1,"249,90",Carla
+30/09/2026,Meia (kit com 3),Acessórios,1,"29,90",Ana
+30/09/2026,Chinelo,Calçados,4,"34,90",Bruno
+30/09/2026,Bermuda de sarja,Vestuário,1,"89,90",Bruno
+30/09/2026,Mochila,Acessórios,1,199.90,Diego
+30/09/2026,Sandália rasteira,Calçados,2,"79,90",Carla
+2026-09-30,Óculos de sol,Acessórios,1,"119,90",Diego
+30/09/2026,Sandália rasteira,Calçados,2,"79,90",Carla
+01/10/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+01/10/2026,Camiseta estampada,Vestuário,5,"69,90",Diego
+01/10/2026,Sandália rasteira,Calçados,4,"79,90",Ana
+2026-10-01,Sandália rasteira,Calçados,2,"79,90",Diego
+01/10/2026,Chinelo,Calçados,1,"34,90",Carla
+01/10/2026,Meia (kit com 3),Acessórios,2,"29,90",Diego
+01/10/2026,Sandália rasteira,Calçados,2,"79,90",Carla
+01/10/2026,Tênis casual,Calçados,1,"249,90",Carla
+01/10/2026,Camiseta estampada,Vestuário,2,"69,90",Carla
+2026-10-01,Meia (kit com 3),Acessórios,5,"29,90",Bruno
+01/10/2026,Vestido midi,Vestuário,2,139.90,Carla
+01/10/2026,Cinto de couro,Acessórios,1,"74,90",Ana
+02/10/2026,Chinelo,Calçados,2,34.90,Ana
+02/10/2026,Cinto de couro,Acessórios,1,"74,90",Carla
+2026-10-02,Calça jeans,Vestuário,1,"159,90",Bruno
+2026-10-02,Bermuda de sarja,Vestuário,1,"89,90",Ana
+02/10/2026,Chinelo,Calçados,3,34.90,Ana
+02/10/2026,Cinto de couro,Acessórios,2,"74,90",Diego
+02/10/2026,Calça jeans,Vestuário,3,"159,90",Bruno
+02/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+02/10/2026,Sandália rasteira,Calçados,2,"79,90",Bruno
+02/10/2026,Chinelo,Calçados,5,"34,90",Bruno
+02/10/2026,Vestido midi,Vestuário,2,"139,90",Carla
+02/10/2026,Mochila,Acessórios,1,199.90,Bruno
+02/10/2026,Mochila,Acessórios,3,"199,90",Diego
+02/10/2026,Óculos de sol,Acessórios,4,"119,90",Ana
+03/10/2026,Camiseta estampada,Vestuário,1,69.90,Bruno
+03/10/2026,Óculos de sol,Acessórios,4,"119,90",Diego
+2026-10-03,Vestido midi,Vestuário,1,"139,90",Carla
+03/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Carla
+03/10/2026,Camiseta estampada,Vestuário,2,"69,90",Bruno
+03/10/2026,Camiseta básica,Vestuário,3,"49,90",Bruno
+03/10/2026,Mochila,Acessórios,1,"199,90",Ana
+03/10/2026,Camiseta básica,Vestuário,3,"49,90",Diego
+03/10/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+03/10/2026,Tênis casual,Calçados,2,"249,90",Diego
+03/10/2026,Boné,Acessórios,2,"44,90",Bruno
+03/10/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+03/10/2026,Calça jeans,Vestuário,1,159.90,Ana
+03/10/2026,Chinelo,Calçados,2,"34,90",Ana
+2026-10-03,Tênis casual,Calçados,1,"249,90",Carla
+03/10/2026,Moletom com capuz,Vestuário,1,"189,90",Bruno
+03/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+04/10/2026,Camiseta básica,Vestuário,1,"49,90",Diego
+04/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+04/10/2026,Camiseta básica,Vestuário,1,"49,90",Ana
+2026-10-04,Vestido midi,Vestuário,1,139.90,Diego
+05/10/2026,Camiseta básica,Vestuário,1,"49,90",Ana
+05/10/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+05/10/2026,Tênis casual,Calçados,3,"249,90",Bruno
+05/10/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+05/10/2026,Mochila,Acessórios,1,"199,90",Bruno
+05/10/2026,Chinelo,Calçados,1,"34,90",Carla
+05/10/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+06/10/2026,Sandália rasteira,Calçados,3,"79,90",Diego
+06/10/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+06/10/2026,Vestido midi,Vestuário,2,"139,90",Ana
+06/10/2026,Calça jeans,Vestuário,2,"159,90",Bruno
+06/10/2026,Camiseta estampada,Vestuário,2,"69,90",Ana
+06/10/2026,Boné,Acessórios,1,"44,90",Diego
+06/10/2026,Mochila,Acessórios,1,"199,90",Carla
+06/10/2026,Cinto de couro,Acessórios,5,"74,90",Bruno
+07/10/2026,Chinelo,Calçados,2,"34,90",Carla
+07/10/2026,Meia (kit com 3),Acessórios,5,"29,90",Diego
+07/10/2026,Bermuda de sarja,Vestuário,3,"89,90",Diego
+07/10/2026,Camiseta estampada,Vestuário,5,69.90,Carla
+07/10/2026,Meia (kit com 3),Acessórios,1,29.90,Bruno
+07/10/2026,Meia (kit com 3),Acessórios,2,"29,90",Carla
+07/10/2026,Chinelo,Calçados,5,"34,90",Bruno
+07/10/2026,Mochila,Acessórios,1,"199,90",Diego
+2026-10-07,Mochila,Acessórios,1,199.90,Ana
+07/10/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+08/10/2026,Tênis casual,Calçados,1,249.90,Ana
+08/10/2026,Sandália rasteira,Calçados,1,"79,90",Bruno
+2026-10-08,Mochila,Acessórios,1,199.90,Ana
+08/10/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+08/10/2026,Meia (kit com 3),Acessórios,4,"29,90",Carla
+08/10/2026,Óculos de sol,Acessórios,1,119.90,Carla
+08/10/2026,Calça jeans,Vestuário,2,"159,90",Bruno
+2026-10-08,Boné,Acessórios,1,"44,90",Carla
+2026-10-08,Óculos de sol,Acessórios,1,119.90,Ana
+2026-10-08,Camiseta básica,Vestuário,2,"49,90",Bruno
+08/10/2026,Mochila,Acessórios,2,"199,90",Carla
+2026-10-08,Cinto de couro,Acessórios,1,74.90,Diego
+08/10/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+08/10/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+09/10/2026,Óculos de sol,Acessórios,1,"119,90",Ana
+09/10/2026,Vestido midi,Vestuário,1,"139,90",Bruno
+09/10/2026,Camiseta estampada,Vestuário,4,69.90,Diego
+2026-10-09,Bermuda de sarja,Vestuário,4,89.90,Carla
+09/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Diego
+09/10/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+09/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Diego
+2026-10-09,Boné,Acessórios,2,"44,90",Ana
+09/10/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+09/10/2026,Mochila,Acessórios,1,"199,90",Bruno
+09/10/2026,Vestido midi,Vestuário,1,"139,90",Carla
+2026-10-09,Óculos de sol,Acessórios,2,"119,90",Ana
+09/10/2026,Tênis casual,Calçados,5,"249,90",Carla
+09/10/2026,Mochila,Acessórios,2,"199,90",Ana
+09/10/2026,Camiseta básica,Vestuário,2,49.90,Diego
+09/10/2026,Calça jeans,Vestuário,1,"159,90",Carla
+09/10/2026,Calça jeans,Vestuário,2,159.90,Carla
+10/10/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+10/10/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+10/10/2026,Boné,Acessórios,3,44.90,Ana
+10/10/2026,Boné,Acessórios,5,"44,90",Bruno
+10/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+10/10/2026,Calça jeans,Vestuário,1,"159,90",Ana
+10/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Bruno
+10/10/2026,Tênis casual,Calçados,2,"249,90",Ana
+10/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+10/10/2026,Chinelo,Calçados,4,"34,90",Carla
+10/10/2026,Chinelo,Calçados,2,"34,90",Carla
+10/10/2026,Boné,Acessórios,4,"44,90",Carla
+2026-10-10,Bermuda de sarja,Vestuário,5,"89,90",Bruno
+10/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+10/10/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+10/10/2026,Óculos de sol,Acessórios,2,"119,90",Ana
+2026-10-10,Moletom com capuz,Vestuário,1,189.90,Carla
+10/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+10/10/2026,Calça jeans,Vestuário,2,"159,90",Ana
+11/10/2026,Chinelo,Calçados,1,"-10,00",Carla
+11/10/2026,Meia (kit com 3),Acessórios,2,"29,90",Bruno
+11/10/2026,Tênis casual,Calçados,3,"249,90",Bruno
+2026-10-11,Mochila,Acessórios,1,"199,90",Ana
+11/10/2026,Cinto de couro,Acessórios,1,"74,90",Ana
+11/10/2026,Calça jeans,Vestuário,3,159.90,Ana
+11/10/2026,Óculos de sol,Acessórios,1,119.90,Carla
+11/10/2026,Camiseta básica,Vestuário,2,"49,90",Carla
+2026-10-12,Sandália rasteira,Calçados,1,"79,90",Bruno
+12/10/2026,Óculos de sol,Acessórios,1,119.90,Carla
+12/10/2026,Calça jeans,Vestuário,2,"159,90",Ana
+12/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+12/10/2026,Calça jeans,Vestuário,2,"159,90",Diego
+12/10/2026,Chinelo,Calçados,1,"34,90",Bruno
+12/10/2026,Sandália rasteira,Calçados,1,"79,90",Bruno
+13/10/2026,Mochila,Acessórios,1,"199,90",Ana
+13/10/2026,Moletom com capuz,Vestuário,2,"189,90",Ana
+13/10/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+13/10/2026,Meia (kit com 3),Acessórios,4,"29,90",Bruno
+2026-10-13,Bermuda de sarja,Vestuário,1,"89,90",Carla
+13/10/2026,Tênis casual,Calçados,4,"249,90",Bruno
+13/10/2026,Mochila,Acessórios,2,199.90,Ana
+13/10/2026,Chinelo,Calçados,2,"34,90",Ana
+13/10/2026,Camiseta básica,Vestuário,4,"49,90",Bruno
+2026-10-14,Vestido midi,Vestuário,1,"139,90",Diego
+2026-10-14,Camiseta estampada,Vestuário,1,"69,90",Bruno
+14/10/2026,Chinelo,Calçados,2,"34,90",Carla
+14/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+14/10/2026,Boné,Acessórios,1,"44,90",Ana
+2026-10-14,Camiseta estampada,Vestuário,1,"69,90",Bruno
+14/10/2026,Mochila,Acessórios,2,"199,90",Diego
+2026-10-14,Vestido midi,Vestuário,1,139.90,Diego
+15/10/2026,Camiseta estampada,Vestuário,2,"69,90",Carla
+15/10/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+15/10/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+15/10/2026,Chinelo,Calçados,1,"34,90",Bruno
+15/10/2026,Moletom com capuz,Vestuário,3,"189,90",Ana
+15/10/2026,Mochila,Acessórios,2,199.90,Ana
+15/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+15/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Bruno
+2026-10-15,Mochila,Acessórios,1,"199,90",Carla
+15/10/2026,Bermuda de sarja,Vestuário,2,"89,90",Carla
+15/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Bruno
+16/10/2026,Moletom com capuz,Vestuário,2,"189,90",Bruno
+16/10/2026,Cinto de couro,Acessórios,2,"74,90",Carla
+16/10/2026,Cinto de couro,Acessórios,2,"74,90",Diego
+16/10/2026,Tênis casual,Calçados,1,"249,90",Diego
+16/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Diego
+16/10/2026,Camiseta básica,Vestuário,5,"49,90",Bruno
+16/10/2026,Tênis casual,Calçados,1,"249,90",Diego
+16/10/2026,Óculos de sol,Acessórios,1,119.90,Ana
+16/10/2026,Moletom com capuz,Vestuário,2,"189,90",Ana
+16/10/2026,Bermuda de sarja,Vestuário,2,"89,90",Bruno
+16/10/2026,Sandália rasteira,Calçados,4,"79,90",Ana
+2026-10-16,Bermuda de sarja,Vestuário,5,"89,90",Diego
+16/10/2026,Bermuda de sarja,Vestuário,2,"89,90",Bruno
+16/10/2026,Chinelo,Calçados,1,"34,90",Carla
+16/10/2026,Moletom com capuz,Vestuário,1,"189,90",Ana
+17/10/2026,Meia (kit com 3),Acessórios,3,29.90,Carla
+17/10/2026,Vestido midi,Vestuário,2,"139,90",Bruno
+17/10/2026,Camiseta básica,Vestuário,4,"49,90",Diego
+17/10/2026,Moletom com capuz,Vestuário,1,"189,90",Bruno
+17/10/2026,Sandália rasteira,Calçados,4,"79,90",Diego
+17/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+17/10/2026,Calça jeans,Vestuário,1,"159,90",Ana
+17/10/2026,Chinelo,Calçados,3,34.90,Ana
+17/10/2026,Mochila,Acessórios,1,"199,90",Ana
+17/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Ana
+17/10/2026,Boné,Acessórios,4,44.90,Diego
+17/10/2026,Camiseta básica,Vestuário,2,"49,90",Carla
+2026-10-17,Chinelo,Calçados,1,34.90,Diego
+2026-10-17,Mochila,Acessórios,1,199.90,Bruno
+17/10/2026,Bermuda de sarja,Vestuário,1,89.90,Carla
+17/10/2026,Mochila,Acessórios,1,"199,90",Bruno
+17/10/2026,Meia (kit com 3),Acessórios,2,29.90,Ana
+17/10/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+17/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+2026-10-17,Boné,Acessórios,5,44.90,Ana
+17/10/2026,Bermuda de sarja,Vestuário,3,89.90,Diego
+2026-10-18,Camiseta básica,Vestuário,2,"49,90",Ana
+2026-10-18,Calça jeans,Vestuário,1,159.90,Bruno
+18/10/2026,Mochila,Acessórios,3,199.90,Carla
+18/10/2026,Calça jeans,Vestuário,2,159.90,Carla
+18/10/2026,Tênis casual,Calçados,1,249.90,Ana
+2026-10-19,Meia (kit com 3),Acessórios,1,"29,90",Ana
+19/10/2026,Vestido midi,Vestuário,2,"139,90",Carla
+19/10/2026,Camiseta básica,Vestuário,2,"49,90",Bruno
+19/10/2026,Vestido midi,Vestuário,1,"139,90",Diego
+19/10/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+19/10/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+19/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+19/10/2026,Sandália rasteira,Calçados,1,"79,90",Bruno
+19/10/2026,Tênis casual,Calçados,2,"249,90",Ana
+20/10/2026,Vestido midi,Vestuário,2,"139,90",Diego
+20/10/2026,Camiseta básica,Vestuário,1,"49,90",Bruno
+20/10/2026,Boné,Acessórios,2,"44,90",Carla
+20/10/2026,Moletom com capuz,Vestuário,1,"189,90",Carla
+20/10/2026,Tênis casual,Calçados,2,"249,90",Bruno
+20/10/2026,Meia (kit com 3),Acessórios,2,"29,90",Ana
+21/10/2026,Moletom com capuz,Vestuário,1,189.90,Diego
+2026-10-21,Mochila,Acessórios,1,"199,90",Bruno
+21/10/2026,Moletom com capuz,Vestuário,4,"189,90",Carla
+2026-10-21,Calça jeans,Vestuário,5,"159,90",Diego
+21/10/2026,Boné,Acessórios,1,"44,90",Diego
+21/10/2026,Vestido midi,Vestuário,2,"139,90",Bruno
+21/10/2026,Cinto de couro,Acessórios,1,"74,90",Bruno
+21/10/2026,Sandália rasteira,Calçados,3,"79,90",Diego
+22/10/2026,Sandália rasteira,Calçados,1,"79,90",Bruno
+22/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+22/10/2026,Boné,Acessórios,1,44.90,Diego
+22/10/2026,Chinelo,Calçados,5,"34,90",Ana
+22/10/2026,Camiseta estampada,Vestuário,2,"69,90",Ana
+2026-10-22,Boné,Acessórios,2,"44,90",Carla
+22/10/2026,Mochila,Acessórios,1,"199,90",Bruno
+22/10/2026,Sandália rasteira,Calçados,1,"79,90",Bruno
+2026-10-22,Vestido midi,Vestuário,1,"139,90",Ana
+22/10/2026,Camiseta estampada,Vestuário,2,"69,90",Carla
+22/10/2026,Sandália rasteira,Calçados,1,"79,90",Ana
+22/10/2026,Sandália rasteira,Calçados,1,"79,90",Ana
+22/10/2026,Mochila,Acessórios,1,"199,90",Ana
+23/10/2026,Mochila,Acessórios,5,"199,90",Bruno
+23/10/2026,Chinelo,Calçados,2,34.90,Bruno
+23/10/2026,Mochila,Acessórios,1,"199,90",Diego
+23/10/2026,Tênis casual,Calçados,2,"249,90",Diego
+23/10/2026,Tênis casual,Calçados,1,"249,90",Ana
+23/10/2026,Boné,Acessórios,3,"44,90",Carla
+23/10/2026,Bermuda de sarja,Vestuário,1,89.90,Carla
+23/10/2026,Boné,Acessórios,1,"44,90",Carla
+23/10/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+23/10/2026,Boné,Acessórios,2,"44,90",Bruno
+23/10/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+23/10/2026,Tênis casual,Calçados,2,"249,90",Diego
+23/10/2026,Cinto de couro,Acessórios,4,74.90,Bruno
+23/10/2026,Chinelo,Calçados,1,"34,90",Diego
+23/10/2026,Boné,Acessórios,1,"44,90",Bruno
+23/10/2026,Bermuda de sarja,Vestuário,5,"89,90",Diego
+23/10/2026,Tênis casual,Calçados,1,249.90,Diego
+24/10/2026,Camiseta estampada,Vestuário,2,"69,90",Ana
+24/10/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+24/10/2026,Chinelo,Calçados,2,"34,90",Carla
+24/10/2026,Chinelo,Calçados,1,"34,90",Bruno
+24/10/2026,Tênis casual,Calçados,3,"249,90",Carla
+2026-10-24,Óculos de sol,Acessórios,1,"119,90",Ana
+2026-10-24,Sandália rasteira,Calçados,1,79.90,Bruno
+24/10/2026,Mochila,Acessórios,2,199.90,Diego
+24/10/2026,Calça jeans,Vestuário,"2,5",159.90,Ana
+24/10/2026,Boné,Acessórios,1,"44,90",Carla
+24/10/2026,Meia (kit com 3),Acessórios,2,29.90,Ana
+2026-10-24,Calça jeans,Vestuário,2,159.90,Carla
+24/10/2026,Óculos de sol,Acessórios,2,"119,90",Bruno
+24/10/2026,Meia (kit com 3),Acessórios,1,29.90,Diego
+24/10/2026,Sandália rasteira,Calçados,2,"79,90",Diego
+24/10/2026,Sandália rasteira,Calçados,2,"79,90",Diego
+25/10/2026,Meia (kit com 3),Acessórios,4,"29,90",Diego
+25/10/2026,Vestido midi,Vestuário,3,139.90,Ana
+2026-10-25,Meia (kit com 3),Acessórios,2,"29,90",Ana
+25/10/2026,Mochila,Acessórios,1,"199,90",Bruno
+25/10/2026,Sandália rasteira,Calçados,3,"79,90",Bruno
+2026-10-25,Boné,Acessórios,2,44.90,Ana
+25/10/2026,Camiseta básica,Vestuário,2,"49,90",Ana
+26/10/2026,Calça jeans,Vestuário,1,159.90,Bruno
+2026-10-26,Meia (kit com 3),Acessórios,3,"29,90",Carla
+26/10/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+26/10/2026,Camiseta básica,Vestuário,1,"49,90",Bruno
+26/10/2026,Tênis casual,Calçados,2,"249,90",Diego
+26/10/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+26/10/2026,Camiseta básica,Vestuário,3,49.90,Diego
+26/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Ana
+26/10/2026,Camiseta estampada,Vestuário,3,"69,90",Bruno
+2026-10-26,Cinto de couro,Acessórios,1,"74,90",Ana
+26/10/2026,Boné,Acessórios,1,"44,90",Bruno
+27/10/2026,Boné,Acessórios,3,"44,90",Ana
+27/10/2026,Calça jeans,Vestuário,2,"159,90",Diego
+27/10/2026,Vestido midi,Vestuário,1,"139,90",Bruno
+27/10/2026,Chinelo,Calçados,2,"34,90",Ana
+27/10/2026,Óculos de sol,Acessórios,3,"119,90",Bruno
+27/10/2026,Meia (kit com 3),Acessórios,2,"29,90",Bruno
+27/10/2026,Sandália rasteira,Calçados,1,"79,90",Ana
+2026-10-27,Chinelo,Calçados,1,"34,90",Carla
+27/10/2026,Calça jeans,Vestuário,3,"159,90",Bruno
+2026-10-28,Sandália rasteira,Calçados,2,"79,90",Ana
+28/10/2026,Camiseta básica,Vestuário,1,"49,90",Diego
+28/10/2026,Chinelo,Calçados,2,"34,90",Diego
+28/10/2026,Meia (kit com 3),Acessórios,2,"29,90",Bruno
+28/10/2026,Moletom com capuz,Vestuário,1,189.90,Bruno
+28/10/2026,Chinelo,Calçados,2,"34,90",Ana
+28/10/2026,Moletom com capuz,Vestuário,2,189.90,Ana
+28/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+28/10/2026,Moletom com capuz,Vestuário,2,"189,90",Ana
+28/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+28/10/2026,Chinelo,Calçados,3,"34,90",Carla
+28/10/2026,Calça jeans,Vestuário,3,"159,90",Ana
+2026-10-28,Mochila,Acessórios,1,"199,90",Ana
+2026-10-29,Meia (kit com 3),Acessórios,2,"29,90",Carla
+29/10/2026,Camiseta básica,Vestuário,2,"49,90",Carla
+29/10/2026,Mochila,Acessórios,2,"199,90",Bruno
+29/10/2026,Meia (kit com 3),Acessórios,1,29.90,Bruno
+29/10/2026,Camiseta básica,Vestuário,1,"49,90",Ana
+29/10/2026,Chinelo,Calçados,2,"34,90",Bruno
+29/10/2026,Vestido midi,Vestuário,4,"139,90",Ana
+29/10/2026,Boné,Acessórios,1,44.90,Bruno
+29/10/2026,Bermuda de sarja,Vestuário,5,89.90,Ana
+2026-10-29,Sandália rasteira,Calçados,2,"79,90",Ana
+30/10/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+30/10/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+30/10/2026,Mochila,Acessórios,2,"199,90",Bruno
+30/10/2026,Calça jeans,Vestuário,1,"159,90",Carla
+30/10/2026,Cinto de couro,Acessórios,3,74.90,Ana
+30/10/2026,Mochila,Acessórios,3,"199,90",Ana
+30/10/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+30/10/2026,Calça jeans,Vestuário,1,159.90,Diego
+2026-10-30,Meia (kit com 3),Acessórios,1,"29,90",Ana
+30/10/2026,Chinelo,Calçados,3,"34,90",Ana
+30/10/2026,Tênis casual,Calçados,1,"249,90",Carla
+30/10/2026,Mochila,Acessórios,3,"199,90",Diego
+30/10/2026,Moletom com capuz,Vestuário,4,"189,90",Ana
+30/10/2026,Calça jeans,Vestuário,1,"159,90",Ana
+30/10/2026,Chinelo,Calçados,2,"34,90",Diego
+2026-10-30,Moletom com capuz,Vestuário,1,189.90,Carla
+31/10/2026,Meia (kit com 3),Acessórios,1,29.90,Carla
+31/10/2026,Calça jeans,Vestuário,1,"159,90",Ana
+31/10/2026,Cinto de couro,Acessórios,3,"74,90",Diego
+31/10/2026,Óculos de sol,Acessórios,2,"119,90",Diego
+31/10/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+31/10/2026,Calça jeans,Vestuário,1,"159,90",Ana
+31/10/2026,Boné,Acessórios,4,"44,90",Ana
+2026-10-31,Bermuda de sarja,Vestuário,1,"89,90",Carla
+31/10/2026,Camiseta estampada,Vestuário,1,"69,90",Diego
+31/10/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+31/10/2026,Calça jeans,Vestuário,4,"159,90",Diego
+31/10/2026,Calça jeans,Vestuário,2,"159,90",Carla
+31/10/2026,Sandália rasteira,Calçados,2,"79,90",Carla
+31/10/2026,Tênis casual,Calçados,1,249.90,Bruno
+2026-10-31,Cinto de couro,Acessórios,1,"74,90",Diego
+31/10/2026,Mochila,Acessórios,1,"199,90",Carla
+31/10/2026,Boné,Acessórios,1,"44,90",Carla
+31/10/2026,Boné,Acessórios,3,"44,90",Ana
+2026-10-31,Mochila,Acessórios,1,"199,90",Bruno
+31/10/2026,Calça jeans,Vestuário,2,"159,90",Ana
+2026-10-31,Mochila,Acessórios,1,199.90,Diego
+2026-11-01,Óculos de sol,Acessórios,1,"119,90",Carla
+01/11/2026,Mochila,Acessórios,1,"199,90",Carla
+01/11/2026,Boné,Acessórios,2,"44,90",Diego
+01/11/2026,Chinelo,Calçados,1,"34,90",Bruno
+01/11/2026,Boné,Acessórios,1,"44,90",Bruno
+02/11/2026,Calça jeans,Vestuário,1,159.90,Carla
+02/11/2026,Camiseta básica,Vestuário,2,49.90,Ana
+02/11/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+02/11/2026,Boné,Acessórios,1,"44,90",Bruno
+2026-11-02,Meia (kit com 3),Acessórios,2,29.90,Carla
+02/11/2026,Calça jeans,Vestuário,2,159.90,Carla
+02/11/2026,Bermuda de sarja,Vestuário,3,"89,90",Carla
+02/11/2026,Calça jeans,Vestuário,1,"159,90",Diego
+2026-11-02,Óculos de sol,Acessórios,5,"119,90",Carla
+2026-11-02,Mochila,Acessórios,1,"199,90",Diego
+02/11/2026,Calça jeans,Vestuário,1,"159,90",Carla
+2026-11-03,Cinto de couro,Acessórios,1,"74,90",Carla
+03/11/2026,Sandália rasteira,Calçados,1,"79,90",Carla
+03/11/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+03/11/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+03/11/2026,Vestido midi,Vestuário,1,"139,90",Bruno
+03/11/2026,Calça jeans,Vestuário,2,"159,90",Ana
+03/11/2026,Vestido midi,Vestuário,1,"139,90",Diego
+04/11/2026,Meia (kit com 3),Acessórios,4,29.90,Carla
+2026-11-04,Boné,Acessórios,3,"44,90",Diego
+04/11/2026,Cinto de couro,Acessórios,3,"74,90",Ana
+04/11/2026,Vestido midi,Vestuário,1,"139,90",Carla
+04/11/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+04/11/2026,Calça jeans,Vestuário,1,"159,90",Diego
+04/11/2026,Bermuda de sarja,Vestuário,1,"89,90",Ana
+04/11/2026,Sandália rasteira,Calçados,1,"79,90",Diego
+05/11/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+05/11/2026,Vestido midi,Vestuário,1,"139,90",Carla
+05/11/2026,Bermuda de sarja,Vestuário,2,"89,90",Ana
+05/11/2026,Camiseta estampada,Vestuário,3,"69,90",Bruno
+05/11/2026,Chinelo,Calçados,1,"34,90",Diego
+2026-11-05,Boné,Acessórios,1,"44,90",Ana
+05/11/2026,Chinelo,Calçados,1,"34,90",Bruno
+2026-11-05,Camiseta estampada,Vestuário,1,69.90,Bruno
+05/11/2026,Bermuda de sarja,Vestuário,1,"89,90",Diego
+2026-11-05,Bermuda de sarja,Vestuário,2,89.90,Carla
+2026-11-05,Vestido midi,Vestuário,4,"139,90",Diego
+05/11/2026,Chinelo,Calçados,1,"34,90",Diego
+05/11/2026,Óculos de sol,Acessórios,2,"119,90",Diego
+06/11/2026,Tênis casual,Calçados,2,"249,90",Ana
+06/11/2026,Camiseta estampada,Vestuário,1,"69,90",Carla
+06/11/2026,Tênis casual,Calçados,2,"249,90",Diego
+06/11/2026,Camiseta básica,Vestuário,1,"49,90",Diego
+06/11/2026,Camiseta básica,Vestuário,3,"49,90",Ana
+06/11/2026,Meia (kit com 3),Acessórios,1,"29,90",Carla
+06/11/2026,Óculos de sol,Acessórios,1,119.90,Ana
+06/11/2026,Óculos de sol,Acessórios,1,"119,90",Carla
+06/11/2026,Moletom com capuz,Vestuário,2,"189,90",Diego
+2026-11-06,Bermuda de sarja,Vestuário,1,"89,90",Carla
+06/11/2026,Óculos de sol,Acessórios,2,"119,90",Diego
+06/11/2026,Calça jeans,Vestuário,1,"159,90",Bruno
+07/11/2026,Óculos de sol,Acessórios,1,"119,90",Ana
+07/11/2026,Vestido midi,Vestuário,1,139.90,Diego
+2026-11-07,Cinto de couro,Acessórios,2,"74,90",Diego
+07/11/2026,Boné,Acessórios,5,"44,90",Carla
+07/11/2026,Vestido midi,Vestuário,3,"139,90",Ana
+07/11/2026,Moletom com capuz,Vestuário,1,189.90,Bruno
+07/11/2026,Óculos de sol,Acessórios,1,"119,90",Diego
+07/11/2026,Chinelo,Calçados,2,"34,90",Ana
+2026-11-07,Sandália rasteira,Calçados,2,"79,90",Ana
+07/11/2026,Bermuda de sarja,Vestuário,3,"89,90",Carla
+2026-11-07,Tênis casual,Calçados,3,"249,90",Bruno
+07/11/2026,Sandália rasteira,Calçados,1,"79,90",Ana
+07/11/2026,Camiseta básica,Vestuário,2,49.90,Carla
+07/11/2026,Chinelo,Calçados,2,"34,90",Ana
+07/11/2026,Sandália rasteira,Calçados,5,"79,90",Carla
+07/11/2026,Moletom com capuz,Vestuário,4,"189,90",Bruno
+08/11/2026,Chinelo,Calçados,3,34.90,Diego
+08/11/2026,Cinto de couro,Acessórios,1,"74,90",Diego
+08/11/2026,Moletom com capuz,Vestuário,1,"189,90",Ana
+08/11/2026,Boné,Acessórios,2,"44,90",Bruno
+09/11/2026,Chinelo,Calçados,1,34.90,Carla
+09/11/2026,Chinelo,Calçados,1,"34,90",Bruno
+09/11/2026,Moletom com capuz,Vestuário,1,"189,90",Bruno
+2026-11-09,Cinto de couro,Acessórios,2,"74,90",Bruno
+2026-11-09,Meia (kit com 3),Acessórios,1,29.90,Carla
+09/11/2026,Moletom com capuz,Vestuário,1,"189,90",Ana
+09/11/2026,Óculos de sol,Acessórios,2,"119,90",Diego
+09/11/2026,Bermuda de sarja,Vestuário,3,"89,90",Carla
+09/11/2026,Tênis casual,Calçados,3,"249,90",Bruno
+09/11/2026,Vestido midi,Vestuário,2,139.90,Diego
+2026-11-10,Vestido midi,Vestuário,1,"139,90",Carla
+2026-11-10,Cinto de couro,Acessórios,1,"74,90",Diego
+10/11/2026,Moletom com capuz,Vestuário,2,"189,90",Bruno
+10/11/2026,Sandália rasteira,Calçados,2,"79,90",Diego
+10/11/2026,Cinto de couro,Acessórios,1,"74,90",Ana
+10/11/2026,Camiseta básica,Vestuário,2,49.90,Carla
+10/11/2026,Mochila,Acessórios,1,"199,90",Bruno
+2026-11-11,Meia (kit com 3),Acessórios,1,"29,90",Carla
+11/11/2026,Calça jeans,Vestuário,1,159.90,Diego
+11/11/2026,Meia (kit com 3),Acessórios,1,"29,90",Bruno
+2026-11-11,Vestido midi,Vestuário,1,"139,90",Bruno
+11/11/2026,Mochila,Acessórios,1,"199,90",Bruno
+11/11/2026,Bermuda de sarja,Vestuário,2,"89,90",Carla
+11/11/2026,Meia (kit com 3),Acessórios,1,29.90,Carla
+11/11/2026,Mochila,Acessórios,1,199.90,Ana
+12/11/2026,Óculos de sol,Acessórios,2,"119,90",Diego
+12/11/2026,Camiseta estampada,Vestuário,1,"69,90",Ana
+12/11/2026,Moletom com capuz,Vestuário,1,"189,90",Bruno
+12/11/2026,Tênis casual,Calçados,1,"249,90",Ana
+12/11/2026,Moletom com capuz,Vestuário,1,"189,90",Bruno
+12/11/2026,Mochila,Acessórios,1,"199,90",Diego
+12/11/2026,Moletom com capuz,Vestuário,1,189.90,Diego
+12/11/2026,Vestido midi,Vestuário,1,"139,90",Ana
+12/11/2026,Óculos de sol,Acessórios,1,119.90,Ana
+12/11/2026,Meia (kit com 3),Acessórios,4,"29,90",Diego
+12/11/2026,Moletom com capuz,Vestuário,1,189.90,Ana
+12/11/2026,Óculos de sol,Acessórios,3,"119,90",Ana
+2026-11-12,Camiseta estampada,Vestuário,3,"69,90",Bruno
+13/11/2026,Cinto de couro,Acessórios,1,"74,90",Carla
+13/11/2026,Meia (kit com 3),Acessórios,3,"29,90",Diego
+2026-11-13,Tênis casual,Calçados,1,"249,90",Diego
+13/11/2026,Mochila,Acessórios,3,"199,90",Bruno
+13/11/2026,Meia (kit com 3),Acessórios,5,29.90,Ana
+2026-11-13,Tênis casual,Calçados,1,"249,90",Diego
+13/11/2026,Calça jeans,Vestuário,2,"159,90",Bruno
+2026-11-13,Sandália rasteira,Calçados,1,"79,90",Ana
+13/11/2026,Camiseta estampada,Vestuário,1,"69,90",Bruno
+2026-11-13,Cinto de couro,Acessórios,1,"74,90",Ana
+13/11/2026,Tênis casual,Calçados,1,"249,90",Diego
+13/11/2026,Calça jeans,Vestuário,2,159.90,Ana
+13/11/2026,Camiseta básica,Vestuário,1,49.90,Diego
+13/11/2026,Óculos de sol,Acessórios,2,"119,90",Carla
+13/11/2026,Moletom com capuz,Vestuário,1,"189,90",Diego
+13/11/2026,Óculos de sol,Acessórios,1,119.90,Diego
+2026-11-13,Camiseta estampada,Vestuário,1,"69,90",Diego
+14/11/2026,Cinto de couro,Acessórios,1,"74,90",Ana
+14/11/2026,Óculos de sol,Acessórios,2,"119,90",Carla
+14/11/2026,Chinelo,Calçados,2,"34,90",Carla
+14/11/2026,Vestido midi,Vestuário,3,139.90,Carla
+14/11/2026,Chinelo,Calçados,2,"34,90",Carla
+14/11/2026,Meia (kit com 3),Acessórios,1,"29,90",Ana
+14/11/2026,Vestido midi,Vestuário,2,"139,90",Carla
+14/11/2026,Meia (kit com 3),Acessórios,3,"29,90",Diego
+14/11/2026,Camiseta estampada,Vestuário,1,"69,90",Diego
+14/11/2026,Bermuda de sarja,Vestuário,2,"89,90",Ana
+14/11/2026,Mochila,Acessórios,4,199.90,Ana
+2026-11-14,Mochila,Acessórios,1,"199,90",Bruno
+14/11/2026,Sandália rasteira,Calçados,2,"79,90",Diego
+14/11/2026,Óculos de sol,Acessórios,4,"119,90",Bruno
+14/11/2026,Meia (kit com 3),Acessórios,2,"29,90",Diego
+14/11/2026,Cinto de couro,Acessórios,3,"74,90",Diego
+2026-11-14,Tênis casual,Calçados,4,"249,90",Carla
+2026-11-14,Tênis casual,Calçados,5,"249,90",Bruno
+14/11/2026,Calça jeans,Vestuário,2,"159,90",Carla
+14/11/2026,Óculos de sol,Acessórios,3,"119,90",Bruno
+15/11/2026,Bermuda de sarja,Vestuário,1,"89,90",Bruno
+15/11/2026,Meia (kit com 3),Acessórios,4,"29,90",Carla
+15/11/2026,Meia (kit com 3),Acessórios,1,"29,90",Diego
+15/11/2026,Cinto de couro,Acessórios,3,"74,90",Diego

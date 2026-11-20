@@ -1,0 +1,36 @@
+# Exemplo de configuração do Fechou.
+# Caminhos relativos são resolvidos a partir da pasta deste arquivo.
+# Segredos (SMTP, Telegram, Google) ficam no .env, nunca aqui.
+
+source:
+  id: loja-demo          # letras minúsculas, números, '-' ou '_'
+  type: csv              # csv | google_sheets
+  path: vendas_demo.csv
+  delimiter: ","
+  # type google_sheets:
+  # spreadsheet_id: "..."
+  # worksheet: "Vendas"
+
+columns:                 # nome interno: nome da coluna na planilha
+  date: "Data"
+  product: "Produto"
+  category: "Categoria"  # opcional
+  quantity: "Qtd"
+  unit_price: "Preço"
+  seller: "Vendedor"     # opcional
+
+report:
+  title: "Relatório semanal de vendas"
+  business_name: "Loja Demo"
+  timezone: "America/Sao_Paulo"
+  empty_period_policy: "send_empty"   # send_empty | skip
+  accent_color: "#1f6f5c"
+  # logo_path: logo.png
+
+delivery:
+  email:
+    enabled: true
+    to: ["dono@exemplo.com"]
+    subject: "Fechamento da semana {start} a {end}"
+  telegram:
+    enabled: false
