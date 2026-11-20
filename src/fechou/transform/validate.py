@@ -1,10 +1,15 @@
 """Schema and row validation (pure functions)."""
 
+import datetime as dt
+from collections.abc import Sequence
+
 from pydantic import ValidationError
 from pydantic_core import ErrorDetails
 
 from fechou.config import ColumnMapping
 from fechou.domain.models import InvalidRow, SaleRow, ValidationResult
+from fechou.domain.parsing import parse_date
+from fechou.domain.period import Period
 from fechou.errors import SchemaError
 from fechou.extract.base import RawTable, line_number
 
@@ -56,6 +61,26 @@ def validate_rows(table: RawTable, columns: ColumnMapping) -> ValidationResult:
                 InvalidRow(
                     line=line_number(int(row_index)),
                     errors=tuple(_error_message(error, mapping) for error in exc.errors()),
+                    date=_try_date(values[fields.index("date")]),
                 )
             )
     return ValidationResult(valid=tuple(valid), invalid=tuple(invalid))
+
+
+def _try_date(raw: str) -> dt.date | None:
+    try:
+        return parse_date(raw)
+    except ValueError:
+        return None
+
+
+def relevant_invalid_rows(
+    invalid: Sequence[InvalidRow], periods: Sequence[Period]
+) -> tuple[InvalidRow, ...]:
+    """Invalid lines that may affect the given periods.
+
+    Lines with an unreadable date are always kept: they could belong anywhere.
+    """
+    return tuple(
+        row for row in invalid if row.date is None or any(row.date in period for period in periods)
+    )

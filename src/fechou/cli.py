@@ -1,14 +1,19 @@
 """Command-line entry point. User-facing text is pt-BR."""
 
+import io
+import sys
 from pathlib import Path
 from typing import Annotated
 
 import typer
 
 from fechou import __version__
+from fechou.clock import SystemClock
 from fechou.config import load_config
+from fechou.demo import run_demo
 from fechou.errors import FechouError
 from fechou.extract import build_source
+from fechou.render.pdf import render_summary_text
 from fechou.transform.validate import validate_rows
 
 EXIT_OK = 0
@@ -35,6 +40,16 @@ ConfigOption = Annotated[
 ]
 
 
+def _safe_console() -> None:
+    """Never crash on output encoding (e.g. cp1252 pipes on Windows schedulers).
+
+    Unencodable characters are replaced instead of raising after the work is done.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(errors="replace")
+
+
 def _version_callback(value: bool) -> None:
     if value:
         typer.echo(f"fechou {__version__}")
@@ -59,6 +74,7 @@ def main(
     ] = False,
 ) -> None:
     """Fechou: relatório semanal automático a partir de planilhas."""
+    _safe_console()
 
 
 @app.command()
@@ -91,6 +107,28 @@ def validate(config: ConfigOption = Path("config.yaml")) -> None:
     if remaining > 0:
         typer.echo(f"  ... e mais {remaining} linha(s).")
     raise typer.Exit(EXIT_DATA_OR_CONFIG)
+
+
+@app.command()
+def demo(
+    output: Annotated[
+        Path,
+        typer.Option(
+            "--output", "-o", help="Pasta onde salvar o PDF e o CSV gerados.", file_okay=False
+        ),
+    ] = Path("out"),
+) -> None:
+    """Gera dados fictícios e o relatório em PDF da semana passada, sem enviar nada."""
+    try:
+        result = run_demo(output, SystemClock())
+    except FechouError as error:
+        raise _fail(error) from None
+
+    typer.echo(render_summary_text(result.report))
+    typer.echo("")
+    typer.echo(f"Dados fictícios: {result.csv_path}")
+    typer.echo(f"PDF gerado:      {result.pdf_path}")
+    typer.echo("Modo demo: nada foi enviado.")
 
 
 if __name__ == "__main__":  # pragma: no cover

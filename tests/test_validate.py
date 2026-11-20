@@ -4,8 +4,10 @@ from decimal import Decimal
 import pytest
 
 from fechou.config import ColumnMapping
+from fechou.domain.models import InvalidRow
+from fechou.domain.period import Period
 from fechou.errors import SchemaError
-from fechou.transform.validate import check_schema, validate_rows
+from fechou.transform.validate import check_schema, relevant_invalid_rows, validate_rows
 from tests.conftest import make_table
 
 VALID = ["12/11/2026", "Camiseta básica", "Vestuário", "3", "49,90", "Ana"]
@@ -95,3 +97,29 @@ def test_header_only_table_has_no_rows(columns: ColumnMapping) -> None:
     result = validate_rows(make_table([]), columns)
 
     assert result.total == 0
+
+
+def test_invalid_rows_keep_their_date_when_readable(columns: ColumnMapping) -> None:
+    table = make_table(
+        [
+            ["12/11/2026", "", "", "1", "10", ""],
+            ["99/99/2026", "Boné", "", "1", "10", ""],
+        ]
+    )
+
+    result = validate_rows(table, columns)
+
+    assert [row.date for row in result.invalid] == [dt.date(2026, 11, 12), None]
+
+
+def test_relevant_invalid_rows_filters_by_period() -> None:
+    week = Period(dt.date(2026, 11, 9), dt.date(2026, 11, 15))
+    rows = [
+        InvalidRow(line=2, errors=("x",), date=dt.date(2026, 11, 10)),
+        InvalidRow(line=3, errors=("x",), date=dt.date(2026, 11, 3)),
+        InvalidRow(line=4, errors=("x",), date=None),
+        InvalidRow(line=5, errors=("x",), date=dt.date(2026, 11, 16)),
+    ]
+
+    assert [r.line for r in relevant_invalid_rows(rows, [week])] == [2, 4]
+    assert [r.line for r in relevant_invalid_rows(rows, [week, week.previous()])] == [2, 3, 4]

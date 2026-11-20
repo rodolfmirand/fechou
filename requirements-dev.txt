@@ -10,8 +10,14 @@ annotated-types==0.8.0
     # via pydantic
 ast-serialize==0.13.1
     # via mypy
+babel==2.18.0
+    # via fechou (pyproject.toml)
+brotli==1.2.1
+    # via fonttools
 build==1.6.1
     # via pip-tools
+cffi==2.1.1
+    # via weasyprint
 click==8.5.1
     # via pip-tools
 colorama==0.4.6
@@ -19,14 +25,22 @@ colorama==0.4.6
     #   build
     #   pytest
     #   typer
+cssselect2==0.10.1
+    # via weasyprint
+fonttools==4.68.0
+    # via weasyprint
 freezegun==1.5.5
     # via fechou (pyproject.toml)
 iniconfig==2.3.1
     # via pytest
+jinja2==3.1.6
+    # via fechou (pyproject.toml)
 librt==0.17.0
     # via mypy
 markdown-it-py==4.3.0
     # via rich
+markupsafe==3.0.4
+    # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
 mypy==2.4.1
@@ -50,20 +64,30 @@ pandas-stubs==3.1.0.261029
     # via fechou (pyproject.toml)
 pathspec==1.1.1
     # via mypy
+pillow==13.0.0
+    # via weasyprint
 pip-tools==7.7.0
     # via fechou (pyproject.toml)
 pluggy==1.7.0
     # via pytest
+pycparser==3.12
+    # via cffi
 pydantic==2.14.4
     # via
     #   fechou (pyproject.toml)
     #   typer
 pydantic-core==2.50.5
     # via pydantic
+pydyf==0.13.0
+    # via weasyprint
 pygments==2.21.0
     # via
     #   pytest
     #   rich
+pypdf==7.1.1
+    # via fechou (pyproject.toml)
+pyphen==0.18.1
+    # via weasyprint
 pyproject-hooks==1.3.3
     # via
     #   build
@@ -82,6 +106,12 @@ ruff==0.17.6
     # via fechou (pyproject.toml)
 shellingham==1.5.4
     # via typer
+tinycss2==1.5.1
+    # via
+    #   cssselect2
+    #   weasyprint
+tinyhtml5==2.1.0
+    # via weasyprint
 typer==0.29.2
     # via fechou (pyproject.toml)
 types-pyyaml==6.0.12.20261113
@@ -99,8 +129,17 @@ tzdata==2026.6
     #   fechou (pyproject.toml)
     #   pandas
     #   python-dateutil
+weasyprint==70.0
+    # via fechou (pyproject.toml)
+webencodings==0.6.1
+    # via
+    #   cssselect2
+    #   tinycss2
+    #   tinyhtml5
 wheel==0.48.0
     # via pip-tools
+zopfli==0.4.3
+    # via fonttools
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

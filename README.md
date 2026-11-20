@@ -2,7 +2,11 @@
 
 Relatório semanal automático a partir de planilhas: lê CSV ou Google Sheets, calcula os indicadores da semana, gera um PDF e envia por e-mail ou Telegram.
 
-> 🚧 **Status: em desenvolvimento (Fases 0 a 2 concluídas).** Já existem a leitura de CSV, a validação da planilha (`fechou validate`), os dados de demonstração e o cálculo de período e indicadores (por enquanto só como biblioteca, sem comando próprio). Relatório, PDF e entrega ainda são planejados.
+> 🚧 **Status: em desenvolvimento (Fases 0 a 3 concluídas).** Já funcionam a leitura de CSV, a validação (`fechou validate`), os indicadores e o relatório em PDF com o modo demonstração (`fechou demo`). Entrega por e-mail, `fechou run` e Google Sheets ainda são planejados.
+
+![Exemplo de relatório gerado pelo Fechou (dados fictícios)](./docs/exemplo-relatorio.png)
+
+*Relatório gerado por `fechou demo` com dados fictícios ([PDF](./docs/exemplo-relatorio.pdf)).*
 
 ## Problema
 
@@ -39,7 +43,7 @@ O Fechou automatiza o ciclo inteiro: **ler → validar → calcular → gerar PD
 
 ## Desenvolvimento
 
-Requisitos: **Python 3.12**. Nada é instalado globalmente; tudo fica no venv do projeto.
+Requisitos: **Python 3.12** e as bibliotecas do **Pango** (usadas pelo WeasyPrint para gerar o PDF; veja abaixo). As dependências Python ficam no venv do projeto.
 
 ```powershell
 # Windows (PowerShell)
@@ -56,6 +60,16 @@ python3.12 -m venv .venv
 .venv/bin/pip-sync requirements-dev.txt
 .venv/bin/python -m pip install --no-deps -e .
 ```
+
+### Instalação do WeasyPrint (Pango)
+
+Conforme a [documentação do WeasyPrint](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html):
+
+- **Windows:** instale o [MSYS2](https://www.msys2.org/) com as opções padrão (por exemplo, `winget install MSYS2.MSYS2`). Depois, no shell **MSYS2 UCRT64**, rode `pacman -S mingw-w64-ucrt-x86_64-pango`. Se aparecer `cannot load library ...`, defina `WEASYPRINT_DLL_DIRECTORIES=C:\msys64\ucrt64\bin`.
+- **Debian/Ubuntu:** `sudo apt install libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libharfbuzz-subset0 fonts-dejavu-core`.
+- Para conferir: `python -m weasyprint --info`.
+
+Sem o Pango, `fechou validate` continua funcionando; só a geração do PDF falha, com uma mensagem explicando o motivo. Os testes de PDF são pulados localmente e obrigatórios no CI.
 
 Checagens (as mesmas que rodam no CI):
 
@@ -84,7 +98,25 @@ Detalhes em [`docs/decisions/0001-dependency-locking-with-pip-tools.md`](./docs/
 
 ```text
 fechou --version
+fechou demo [--output ./out]
 fechou validate --config examples/config.example.yaml
+```
+
+**`fechou demo`** gera dados fictícios da semana passada e da anterior (com 4 linhas inválidas de propósito), passa pelo mesmo fluxo de uma execução real (CSV → validação → indicadores → PDF), salva o CSV e o PDF em `./out` e imprime o resumo. **Nada é enviado.**
+
+```text
+Relatório semanal de vendas — Loja Demo (dados fictícios)
+Período: 09/11/2026 a 15/11/2026
+
+• Faturamento: R$ 15.785,80 (+14,2% vs. período anterior)
+• Vendas: 75 (-2,6% vs. período anterior)
+• Ticket médio: R$ 210,48
+• Itens vendidos: 142
+• Produto destaque: Tênis casual (R$ 3.998,40)
+• Melhor dia: quarta-feira, 11/11/2026 (R$ 3.742,30)
+• Dia mais fraco: terça-feira, 10/11/2026 (R$ 1.033,70)
+
+Atenção: 4 linha(s) descartada(s) por erro de preenchimento.
 ```
 
 O `validate` lê a planilha, aplica as regras de validação e lista as linhas descartadas com o motivo, sem gerar nem enviar nada. Ele sai com código `0` quando tudo é válido e `1` quando há linhas inválidas ou erro de configuração. Exemplo com o CSV de demonstração, que tem 6 linhas quebradas de propósito:
@@ -122,6 +154,8 @@ O arquivo `examples/vendas_demo.csv` é **fictício** e reprodutível (semente f
 python scripts/generate_demo_data.py [--start 2026-09-07] [--end 2026-11-15] [--seed 42] [--invalid 6]
 ```
 
+O PDF de exemplo em `docs/` (data fixa, 16/11/2026) é regenerado com `python scripts/generate_sample_report.py`.
+
 ### Período e indicadores
 
 - **Período padrão:** a última semana completa (segunda a domingo) no fuso do relatório (`America/Sao_Paulo` por padrão). Ela é comparada com a semana imediatamente anterior. Com `--start/--end` (no comando `run`, planejado), a comparação é com o mesmo número de dias imediatamente antes.
@@ -133,7 +167,6 @@ python scripts/generate_demo_data.py [--start 2026-09-07] [--end 2026-11-15] [--
 Os comandos abaixo ainda **não existem**. Esta seção será atualizada ao longo da implementação.
 
 ```text
-fechou demo [--output ./out]
 fechou run --config config.yaml [--start AAAA-MM-DD --end AAAA-MM-DD] [--dry-run] [--force]
 fechou init-config [--output config.yaml]
 ```
@@ -143,7 +176,7 @@ fechou init-config [--output config.yaml]
 - [x] Fase 0: estrutura do projeto, lint, testes e CI
 - [x] Fase 1: modelos, leitura de CSV, validação e dados de demonstração
 - [x] Fase 2: cálculo de período e indicadores
-- [ ] Fase 3: relatório em PDF e comando `demo`
+- [x] Fase 3: relatório em PDF e comando `demo`
 - [ ] Fase 4: entrega por e-mail, idempotência e registro de execuções
 - [ ] Fase 5: integração com Google Sheets
 - [ ] Fase 6: Docker, agendamento e documentação final

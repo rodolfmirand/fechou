@@ -79,6 +79,10 @@ class ReportConfig(_StrictModel):
     accent_color: str = "#1f6f5c"
     logo_path: Path | None = None
 
+    @property
+    def zone(self) -> ZoneInfo:
+        return ZoneInfo(self.timezone)
+
     @field_validator("timezone")
     @classmethod
     def _check_timezone(cls, value: str) -> str:

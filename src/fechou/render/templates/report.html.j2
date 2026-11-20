@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>{{ report.title }} — {{ report.business_name }}</title>
+<style>
+  :root {
+    --accent: {{ report.accent_color }};
+    --ink: #1d2327;
+    --muted: #5f6b73;
+    --line: #e3e7ea;
+    --soft: #f5f7f8;
+    --up: #1a7f4b;
+    --down: #b3261e;
+    --font: "DejaVu Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm 14mm;
+    @bottom-left {
+      content: "Fechou · gerado em {{ report.generated_at | datetime }}";
+      font-family: var(--font); font-size: 7.5pt; color: #5f6b73;
+    }
+    @bottom-right {
+      content: "Página " counter(page) " de " counter(pages);
+      font-family: var(--font); font-size: 7.5pt; color: #5f6b73;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: var(--font);
+    font-size: 9.5pt; color: var(--ink); margin: 0; line-height: 1.35;
+  }
+  header {
+    border-top: 5pt solid var(--accent);
+    padding-top: 8pt; margin-bottom: 12pt;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  header .business {
+    font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent); font-weight: bold;
+  }
+  header h1 { font-size: 18pt; margin: 2pt 0 2pt; }
+  header .period { color: var(--muted); font-size: 10pt; }
+  header img.logo { max-height: 38pt; max-width: 120pt; }
+
+  h2 {
+    font-size: 11pt; margin: 13pt 0 5pt; padding-bottom: 3pt;
+    border-bottom: 1pt solid var(--line);
+  }
+  .kpis { display: flex; gap: 8pt; }
+  .kpi {
+    flex: 1; background: var(--soft); border-radius: 4pt; padding: 8pt 9pt;
+    border-left: 3pt solid var(--accent);
+  }
+  .kpi .label { font-size: 7.5pt; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .kpi .value { font-size: 14pt; font-weight: bold; margin: 2pt 0; }
+  .kpi .meta { font-size: 7.5pt; color: var(--muted); }
+  .trend-up { color: var(--up); font-weight: bold; }
+  .trend-down { color: var(--down); font-weight: bold; }
+  .trend-flat, .trend-none { color: var(--muted); font-weight: bold; }
+
+  .empty {
+    background: var(--soft); border-radius: 4pt; padding: 18pt; text-align: center;
+    font-size: 12pt; color: var(--muted); margin-top: 12pt;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--muted); font-weight: normal; padding: 3pt 4pt; border-bottom: 1pt solid var(--line);
+  }
+  td { padding: 3pt 4pt; border-bottom: .5pt solid var(--line); vertical-align: middle; }
+  .num { text-align: right; white-space: nowrap; }
+  .rank { width: 14pt; color: var(--muted); }
+  .bar-cell { width: 28%; }
+  .bar { height: 6pt; background: var(--accent); border-radius: 2pt; }
+
+  .columns { display: flex; gap: 14pt; }
+  .columns > section { flex: 1; }
+
+  .daily { width: 100%; border-collapse: separate; border-spacing: 6pt 0; table-layout: fixed; }
+  .daily td { border: none; padding: 0; text-align: center; vertical-align: bottom; }
+  .daily .col { height: 30mm; vertical-align: bottom; }
+  .daily .day-bar { background: #c9d3d8; border-radius: 2pt 2pt 0 0; margin: 0 auto; width: 70%; }
+  .daily .best .day-bar { background: var(--accent); }
+  .daily .worst .day-bar { background: #e2a39e; }
+  .daily .amount { font-size: 7pt; color: var(--muted); padding-bottom: 2pt; }
+  .daily .label { font-size: 7.5pt; padding-top: 3pt; border-top: 1pt solid var(--line); }
+  .highlights { margin-top: 8pt; font-size: 8.5pt; }
+  .highlights strong { color: var(--accent); }
+
+  .warnings {
+    margin-top: 13pt; border: 1pt solid #e8c76a; background: #fff8e1; border-radius: 4pt;
+    padding: 8pt 10pt; font-size: 8pt; page-break-inside: avoid;
+  }
+  .warnings h2 { border: none; margin: 0 0 4pt; font-size: 10pt; }
+  .warnings ul { margin: 4pt 0 0; padding-left: 14pt; }
+  .warnings li { margin-bottom: 1.5pt; }
+  .source-note { margin-top: 14pt; font-size: 7.5pt; color: var(--muted); }
+  section { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="business">{{ report.business_name }}</div>
+    <h1>{{ report.title }}</h1>
+    <div class="period">
+      {{ report.period.start | date }} a {{ report.period.end | date }}
+      · comparado com {{ previous.period.start | date }} a {{ previous.period.end | date }}
+    </div>
+  </div>
+  {% if report.logo_uri %}
+  <img class="logo" src="{{ report.logo_uri }}" alt="">
+  {% endif %}
+</header>
+
+<div class="kpis">
+  {% for kpi in kpis %}
+  <div class="kpi">
+    <div class="label">{{ kpi.label }}</div>
+    <div class="value">{{ kpi.value }}</div>
+    <div class="meta">
+      {% if kpi.change %}<span class="trend-{{ kpi.trend }}">{{ kpi.change }}</span> vs. anterior<br>{% endif %}
+      anterior: {{ kpi.previous }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if current.is_empty %}
+<div class="empty">Sem movimento no período.</div>
+{% else %}
+
+<section>
+  <h2>Faturamento por dia</h2>
+  <table class="daily">
+    <tr>
+      {% for bar in day_bars %}
+      <td class="col {% if bar.is_best %}best{% elif bar.is_worst %}worst{% endif %}">
+        <div class="amount">{{ bar.day.revenue | money }}</div>
+        <div class="day-bar" style="height: {{ '%.1f' | format(bar.height * 0.24) }}mm"></div>
+      </td>
+      {% endfor %}
+    </tr>
+    <tr>
+      {% for bar in day_bars %}
+      <td class="label">{{ bar.day.date | weekday(short=True) }}<br>{{ bar.day.date.strftime('%d/%m') }}</td>
+      {% endfor %}
+    </tr>
+  </table>
+  <div class="highlights">
+    Melhor dia: <strong>{{ current.best_day.date | weekday }}, {{ current.best_day.date | date }}</strong>
+    ({{ current.best_day.revenue | money }}) ·
+    Dia mais fraco: <strong>{{ current.worst_day.date | weekday }}, {{ current.worst_day.date | date }}</strong>
+    ({{ current.worst_day.revenue | money }})
+  </div>
+</section>
+
+<section>
+  <h2>Top {{ current.top_products | length }} produtos por faturamento</h2>
+  <table>
+    <tr><th class="rank">#</th><th>Produto</th><th class="num">Qtd.</th><th class="num">Faturamento</th><th class="num">% do total</th><th class="bar-cell"></th></tr>
+    {% for item in current.top_products %}
+    <tr>
+      <td class="rank">{{ loop.index }}</td>
+      <td>{{ item.name }}</td>
+      <td class="num">{{ item.quantity | integer }}</td>
+      <td class="num">{{ item.revenue | money }}</td>
+      <td class="num">{{ item.share | share }}</td>
+      <td class="bar-cell"><div class="bar" style="width: {{ '%.1f' | format(item.share * 100) }}%"></div></td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+
+{% if current.by_category or current.by_seller %}
+<div class="columns">
+  {% for title, items in [("Por categoria", current.by_category), ("Por vendedor", current.by_seller)] %}
+  {% if items %}
+  <section>
+    <h2>{{ title }}</h2>
+    <table>
+      <tr><th>{{ "Categoria" if loop.first else "Vendedor" }}</th><th class="num">Vendas</th><th class="num">Faturamento</th><th class="num">%</th></tr>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td class="num">{{ item.sales_count | integer }}</td>
+        <td class="num">{{ item.revenue | money }}</td>
+        <td class="num">{{ item.share | share }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </section>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+{% endif %}
+
+{% if warnings %}
+<div class="warnings">
+  <h2>Avisos: {{ report.warnings | length }} linha(s) descartada(s)</h2>
+  <div>As linhas abaixo têm erro de preenchimento e não entraram nos cálculos. Corrija-as na planilha.</div>
+  <ul>
+    {% for row in warnings %}
+    <li>{{ row.describe() }}</li>
+    {% endfor %}
+  </ul>
+  {% if hidden_warnings %}
+  <div>… e mais {{ hidden_warnings }} linha(s). Rode <code>fechou validate</code> para ver a lista completa.</div>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="source-note">
+  Fonte: {{ report.rows_read | integer }} linha(s) lida(s), {{ report.rows_invalid | integer }} descartada(s) no total.
+  Valores em reais; variações em relação ao período anterior de mesmo tamanho.
+</div>
+</body>
+</html>

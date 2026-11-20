@@ -8,24 +8,46 @@ annotated-doc==0.0.7
     # via typer
 annotated-types==0.8.0
     # via pydantic
+babel==2.18.0
+    # via fechou (pyproject.toml)
+brotli==1.2.1
+    # via fonttools
+cffi==2.1.1
+    # via weasyprint
 colorama==0.4.6
     # via typer
+cssselect2==0.10.1
+    # via weasyprint
+fonttools==4.68.0
+    # via weasyprint
+jinja2==3.1.6
+    # via fechou (pyproject.toml)
 markdown-it-py==4.3.0
     # via rich
+markupsafe==3.0.4
+    # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
 numpy==2.5.5
     # via pandas
 pandas==3.1.1
     # via fechou (pyproject.toml)
+pillow==13.0.0
+    # via weasyprint
+pycparser==3.12
+    # via cffi
 pydantic==2.14.4
     # via
     #   fechou (pyproject.toml)
     #   typer
 pydantic-core==2.50.5
     # via pydantic
+pydyf==0.13.0
+    # via weasyprint
 pygments==2.21.0
     # via rich
+pyphen==0.18.1
+    # via weasyprint
 python-dateutil==4.0.0
     # via pandas
 pyyaml==6.0.3
@@ -34,6 +56,12 @@ rich==15.0.0
     # via typer
 shellingham==1.5.4
     # via typer
+tinycss2==1.5.1
+    # via
+    #   cssselect2
+    #   weasyprint
+tinyhtml5==2.1.0
+    # via weasyprint
 typer==0.29.2
     # via fechou (pyproject.toml)
 typing-extensions==4.16.0
@@ -48,3 +76,12 @@ tzdata==2026.6
     #   fechou (pyproject.toml)
     #   pandas
     #   python-dateutil
+weasyprint==70.0
+    # via fechou (pyproject.toml)
+webencodings==0.6.1
+    # via
+    #   cssselect2
+    #   tinycss2
+    #   tinyhtml5
+zopfli==0.4.3
+    # via fonttools

@@ -71,6 +71,9 @@ class InvalidRow:
 
     line: int
     errors: tuple[str, ...]
+    # The line's date when that cell itself is valid; lets the report show only
+    # the problems that affect the periods being reported.
+    date: dt.date | None = None
 
     def describe(self) -> str:
         return f"linha {self.line}: " + "; ".join(self.errors)
@@ -134,3 +137,25 @@ class ReportMetrics:
     previous: PeriodMetrics
     revenue_change: Decimal | None  # fraction (0.125 = +12,5%); None if previous is 0
     sales_count_change: Decimal | None
+
+
+# --- report ---------------------------------------------------------------------
+
+
+@dataclass(frozen=True, slots=True)
+class ReportData:
+    """Everything the renderers need; no formatting decisions here."""
+
+    title: str
+    business_name: str
+    accent_color: str
+    logo_uri: str | None
+    generated_at: dt.datetime  # aware, in the report timezone
+    metrics: ReportMetrics
+    warnings: tuple[InvalidRow, ...]  # invalid lines relevant to the periods shown
+    rows_read: int  # non-blank lines in the source
+    rows_invalid: int  # all invalid lines in the source
+
+    @property
+    def period(self) -> Period:
+        return self.metrics.current.period
