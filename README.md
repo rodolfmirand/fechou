@@ -2,7 +2,7 @@
 
 Relatório semanal automático a partir de planilhas: lê CSV ou Google Sheets, calcula os indicadores da semana, gera um PDF e envia por e-mail ou Telegram.
 
-> 🚧 **Status: em desenvolvimento (Fases 0 a 3 concluídas).** Já funcionam a leitura de CSV, a validação (`fechou validate`), os indicadores e o relatório em PDF com o modo demonstração (`fechou demo`). Entrega por e-mail, `fechou run` e Google Sheets ainda são planejados.
+> 🚧 **Status: em desenvolvimento (Fases 0 a 4 concluídas).** O fluxo completo com CSV já funciona: validação, indicadores, PDF, envio por e-mail (SMTP) com novas tentativas, idempotência e registro das execuções (`fechou run`). Google Sheets, Docker e agendamento ainda são planejados.
 
 ![Exemplo de relatório gerado pelo Fechou (dados fictícios)](./docs/exemplo-relatorio.png)
 
@@ -98,8 +98,20 @@ Detalhes em [`docs/decisions/0001-dependency-locking-with-pip-tools.md`](./docs/
 
 ```text
 fechou --version
+fechou init-config [--output config.yaml] [--overwrite]
+fechou validate --config config.yaml
 fechou demo [--output ./out]
-fechou validate --config examples/config.example.yaml
+fechou run --config config.yaml [--start AAAA-MM-DD --end AAAA-MM-DD] [--dry-run] [--force] [--output ./out]
+```
+
+Primeiros passos com o CSV de demonstração:
+
+```bash
+fechou init-config                 # cria config.yaml comentado
+cp .env.example .env               # preencha SMTP_* (veja "Envio por e-mail")
+fechou validate -c config.yaml     # confere a planilha
+fechou run -c config.yaml --start 2026-11-09 --end 2026-11-15 --dry-run   # gera o PDF sem enviar
+fechou run -c config.yaml --start 2026-11-09 --end 2026-11-15             # envia
 ```
 
 **`fechou demo`** gera dados fictícios da semana passada e da anterior (com 4 linhas inválidas de propósito), passa pelo mesmo fluxo de uma execução real (CSV → validação → indicadores → PDF), salva o CSV e o PDF em `./out` e imprime o resumo. **Nada é enviado.**
@@ -134,9 +146,43 @@ Linhas com problema (serão descartadas do relatório):
   ...
 ```
 
+### `fechou run`
+
+Executa o fluxo completo: **período → já enviado? → ler → validar → calcular → PDF → enviar → registrar**.
+
+- **Período padrão:** a semana passada (segunda a domingo, no fuso do relatório). Com `--start` e `--end` (sempre juntos), qualquer intervalo.
+- **Idempotência:** se o relatório daquela fonte e período já foi enviado, o comando encerra com "Nada a fazer" (código 0) **sem ler a planilha**. `--force` reenvia.
+- **`--dry-run`:** faz tudo, exceto enviar. Mostra o resumo e salva o PDF. Não precisa de SMTP configurado e não conta como enviado.
+- **Falhas de rede:** até 3 novas tentativas (esperas de 2 s, 4 s e 8 s). Erros definitivos, como senha errada ou destinatário recusado, não são repetidos.
+- **Período sem vendas:** com `empty_period_policy: send_empty`, envia um relatório "Sem movimento"; com `skip`, só registra.
+- O PDF de cada execução fica salvo em `OUTPUT_DIR` (padrão `./out`).
+
+| Código de saída | Significado |
+|---|---|
+| `0` | Enviado, simulação concluída ou nada a fazer |
+| `1` | Erro de configuração ou de dados (nada foi enviado) |
+| `2` | Falha na entrega depois das novas tentativas |
+
+Cada execução é gravada na tabela `runs` do SQLite (`DATABASE_PATH`, padrão `./data/fechou.db`), com período, status, contagem de linhas, destinatários e erro. Os logs saem em JSON no stderr, com um `run_id` por execução, e trazem só contagens e status, nunca linhas da planilha nem e-mails.
+
+### Envio por e-mail
+
+Funciona com qualquer servidor SMTP. Configure no `.env` (modelo em [`.env.example`](./.env.example)):
+
+| Variável | Exemplo | Observação |
+|---|---|---|
+| `SMTP_HOST` / `SMTP_PORT` | `smtp.gmail.com` / `587` | |
+| `SMTP_SECURITY` | `starttls` | `starttls` (587), `ssl` (465) ou `none` (só para servidor de teste local) |
+| `SMTP_USER` / `SMTP_PASSWORD` | | No Gmail, use uma **senha de app**, nunca a senha da conta |
+| `SMTP_FROM` | `Fechou <relatorios@exemplo.com>` | Remetente |
+
+Os destinatários e o assunto ficam no `config.yaml` (`delivery.email`). O assunto aceita `{start}`, `{end}` e `{business}`.
+
+Para testar sem enviar e-mails de verdade, aponte para um servidor SMTP de testes local (por exemplo, o Mailpit) com `SMTP_SECURITY=none`. Um `docker-compose` com Mailpit está planejado para a Fase 6.
+
 ### Configuração
 
-Copie [`examples/config.example.yaml`](./examples/config.example.yaml) e ajuste. Caminhos relativos são resolvidos a partir da pasta do arquivo de configuração. A seção `columns` liga os nomes internos (`date`, `product`, `category`, `quantity`, `unit_price`, `seller`) aos nomes das colunas da sua planilha. `category` e `seller` são opcionais.
+Gere um modelo com `fechou init-config` ou copie [`examples/config.example.yaml`](./examples/config.example.yaml) e ajuste. Caminhos relativos são resolvidos a partir da pasta do arquivo de configuração. A seção `columns` liga os nomes internos (`date`, `product`, `category`, `quantity`, `unit_price`, `seller`) aos nomes das colunas da sua planilha. `category` e `seller` são opcionais.
 
 Formatos aceitos nas células:
 
@@ -158,18 +204,15 @@ O PDF de exemplo em `docs/` (data fixa, 16/11/2026) é regenerado com `python sc
 
 ### Período e indicadores
 
-- **Período padrão:** a última semana completa (segunda a domingo) no fuso do relatório (`America/Sao_Paulo` por padrão). Ela é comparada com a semana imediatamente anterior. Com `--start/--end` (no comando `run`, planejado), a comparação é com o mesmo número de dias imediatamente antes.
+- **Período padrão:** a última semana completa (segunda a domingo) no fuso do relatório (`America/Sao_Paulo` por padrão). Ela é comparada com a semana imediatamente anterior. Com `--start/--end` no `fechou run`, a comparação é com o mesmo número de dias imediatamente antes.
 - **Indicadores:** faturamento, número de vendas, itens vendidos, ticket médio, top 5 produtos, faturamento por categoria e por vendedor, faturamento por dia, melhor e pior dia, e variação de faturamento e de vendas em relação ao período anterior ("—" quando o anterior é zero).
 - Valores monetários são calculados sem `float` (centavos inteiros). As regras de arredondamento e desempate estão em [`docs/decisions/0004-period-and-metrics-rules.md`](./docs/decisions/0004-period-and-metrics-rules.md).
 
 ### Planejado
 
-Os comandos abaixo ainda **não existem**. Esta seção será atualizada ao longo da implementação.
-
-```text
-fechou run --config config.yaml [--start AAAA-MM-DD --end AAAA-MM-DD] [--dry-run] [--force]
-fechou init-config [--output config.yaml]
-```
+- Fonte `google_sheets` (Fase 5). Hoje, uma configuração com esse tipo é aceita, mas a leitura informa que ainda não está disponível.
+- Docker, `docker compose` com Mailpit e agendamento (Fase 6).
+- Telegram (opcional).
 
 ## Roadmap
 
@@ -177,13 +220,14 @@ fechou init-config [--output config.yaml]
 - [x] Fase 1: modelos, leitura de CSV, validação e dados de demonstração
 - [x] Fase 2: cálculo de período e indicadores
 - [x] Fase 3: relatório em PDF e comando `demo`
-- [ ] Fase 4: entrega por e-mail, idempotência e registro de execuções
+- [x] Fase 4: entrega por e-mail, idempotência e registro de execuções
 - [ ] Fase 5: integração com Google Sheets
 - [ ] Fase 6: Docker, agendamento e documentação final
 
 ## Limitações previstas
 
 - Sem interface web nem múltiplos usuários.
+- Duas execuções **simultâneas** do mesmo período podem enviar em dobro. Com um único agendador isso não ocorre (veja a decisão 0006).
 - Suporte a `.xlsx` fica como item opcional.
 - Números de "tempo economizado" que aparecerem aqui serão **estimativas de demonstração**, não resultados medidos em clientes.
 

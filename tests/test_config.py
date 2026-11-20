@@ -85,6 +85,10 @@ def test_google_sheets_source(tmp_path: Path) -> None:
             lambda d: d.update(delivery={"email": {"to": ["dono-at-exemplo.com"]}}),
             "e-mail inválido: dono-at-exemplo.com",
         ),
+        (
+            lambda d: d.update(delivery={"email": {"subject": "Semana {inicio}"}}),
+            "assunto inválido; use apenas {start}, {end} e {business}",
+        ),
     ],
 )
 def test_invalid_configs_have_pt_br_messages(tmp_path: Path, mutate: Any, expected: str) -> None:

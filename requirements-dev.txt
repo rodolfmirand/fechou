@@ -75,9 +75,12 @@ pycparser==3.12
 pydantic==2.14.4
     # via
     #   fechou (pyproject.toml)
+    #   pydantic-settings
     #   typer
 pydantic-core==2.50.5
     # via pydantic
+pydantic-settings==2.16.3
+    # via fechou (pyproject.toml)
 pydyf==0.13.0
     # via weasyprint
 pygments==2.21.0
@@ -98,6 +101,8 @@ python-dateutil==4.0.0
     # via
     #   freezegun
     #   pandas
+python-dotenv==1.2.4
+    # via pydantic-settings
 pyyaml==6.0.3
     # via fechou (pyproject.toml)
 rich==15.0.0
@@ -121,9 +126,12 @@ typing-extensions==4.16.0
     #   mypy
     #   pydantic
     #   pydantic-core
+    #   pydantic-settings
     #   typing-inspection
 typing-inspection==0.4.5
-    # via pydantic
+    # via
+    #   pydantic
+    #   pydantic-settings
 tzdata==2026.6
     # via
     #   fechou (pyproject.toml)

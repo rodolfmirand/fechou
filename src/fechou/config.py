@@ -113,6 +113,18 @@ class EmailDeliveryConfig(_StrictModel):
             raise ValueError("e-mail inválido: " + ", ".join(bad))
         return value
 
+    @field_validator("subject")
+    @classmethod
+    def _check_subject(cls, value: str) -> str:
+        try:
+            value.format(start="01/01/2026", end="07/01/2026", business="Loja")
+        except (KeyError, IndexError, ValueError) as exc:
+            raise ValueError(
+                "assunto inválido; use apenas {start}, {end} e {business} "
+                f"como variáveis (problema: {exc})"
+            ) from None
+        return value
+
     @model_validator(mode="after")
     def _require_recipients(self) -> Self:
         if self.enabled and not self.to:

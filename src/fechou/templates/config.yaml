@@ -1,0 +1,37 @@
+# Configuração do Fechou (gerada por `fechou init-config`).
+# Caminhos relativos são resolvidos a partir da pasta deste arquivo.
+# Segredos (SMTP, Telegram, Google) ficam no .env, nunca aqui.
+
+source:
+  id: minha-loja          # letras minúsculas, números, '-' ou '_' (usado na idempotência)
+  type: csv               # csv | google_sheets
+  path: examples/vendas_demo.csv
+  delimiter: ","          # use ";" para CSV exportado do Excel em português
+  # type google_sheets:
+  # spreadsheet_id: "..."
+  # worksheet: "Vendas"
+
+columns:                  # nome interno: nome da coluna na sua planilha
+  date: "Data"
+  product: "Produto"
+  category: "Categoria"   # opcional (apague a linha se não existir)
+  quantity: "Qtd"
+  unit_price: "Preço"
+  seller: "Vendedor"      # opcional (apague a linha se não existir)
+
+report:
+  title: "Relatório semanal de vendas"
+  business_name: "Minha Loja"
+  timezone: "America/Sao_Paulo"
+  empty_period_policy: "send_empty"   # send_empty | skip
+  accent_color: "#1f6f5c"
+  # logo_path: logo.png
+
+delivery:
+  email:
+    enabled: true
+    to: ["dono@exemplo.com"]
+    # Variáveis disponíveis: {start}, {end}, {business}
+    subject: "Fechamento da semana {start} a {end}"
+  telegram:
+    enabled: false

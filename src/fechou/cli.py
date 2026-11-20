@@ -1,7 +1,10 @@
 """Command-line entry point. User-facing text is pt-BR."""
 
+import datetime as dt
 import io
 import sys
+import uuid
+from importlib.resources import files
 from pathlib import Path
 from typing import Annotated
 
@@ -13,12 +16,21 @@ from fechou.config import load_config
 from fechou.demo import run_demo
 from fechou.errors import FechouError
 from fechou.extract import build_source
+from fechou.logging_setup import configure_logging
 from fechou.render.pdf import render_summary_text
+from fechou.runner import (
+    EXIT_DATA_OR_CONFIG,
+    EXIT_DELIVERY,
+    EXIT_OK,
+    RunOptions,
+    build_deliveries,
+    execute_run,
+)
+from fechou.settings import load_settings
+from fechou.storage.runs import RunStore
 from fechou.transform.validate import validate_rows
 
-EXIT_OK = 0
-EXIT_DATA_OR_CONFIG = 1
-EXIT_DELIVERY = 2
+__all__ = ["EXIT_DATA_OR_CONFIG", "EXIT_DELIVERY", "EXIT_OK", "app"]
 
 MAX_LISTED_PROBLEMS = 50
 
@@ -129,6 +141,97 @@ def demo(
     typer.echo(f"Dados fictícios: {result.csv_path}")
     typer.echo(f"PDF gerado:      {result.pdf_path}")
     typer.echo("Modo demo: nada foi enviado.")
+
+
+@app.command()
+def run(
+    config: ConfigOption = Path("config.yaml"),
+    start: Annotated[
+        dt.datetime | None,
+        typer.Option(
+            "--start", formats=["%Y-%m-%d"], metavar="AAAA-MM-DD", help="Início do período."
+        ),
+    ] = None,
+    end: Annotated[
+        dt.datetime | None,
+        typer.Option("--end", formats=["%Y-%m-%d"], metavar="AAAA-MM-DD", help="Fim do período."),
+    ] = None,
+    force: Annotated[
+        bool, typer.Option("--force", help="Reenvia mesmo se o período já foi enviado.")
+    ] = False,
+    dry_run: Annotated[
+        bool, typer.Option("--dry-run", help="Faz tudo, exceto enviar; salva o PDF.")
+    ] = False,
+    output: Annotated[
+        Path | None,
+        typer.Option(
+            "--output", "-o", help="Pasta do PDF (padrão: OUTPUT_DIR ou ./out).", file_okay=False
+        ),
+    ] = None,
+) -> None:
+    """Gera e envia o relatório do período (padrão: semana passada, seg. a dom.).
+
+    Códigos de saída: 0 sucesso ou nada a fazer, 1 erro de dados/configuração,
+    2 falha de entrega.
+    """
+    run_id = uuid.uuid4().hex[:12]
+    try:
+        settings = load_settings()
+        configure_logging(run_id, settings.log_level)
+        app_config = load_config(config)
+        deliveries = [] if dry_run else build_deliveries(app_config, settings)
+        store = RunStore(settings.database_path)
+    except FechouError as error:
+        raise _fail(error) from None
+
+    options = RunOptions(
+        start=start.date() if start else None,
+        end=end.date() if end else None,
+        force=force,
+        dry_run=dry_run,
+        output_dir=output or settings.output_dir,
+    )
+    try:
+        outcome = execute_run(
+            app_config,
+            options,
+            deliveries=deliveries,
+            store=store,
+            clock=SystemClock(),
+            run_id=run_id,
+        )
+    except FechouError as error:
+        raise _fail(error) from None
+
+    if outcome.summary:
+        typer.echo(outcome.summary)
+        typer.echo("")
+    typer.echo(outcome.message, err=outcome.exit_code != EXIT_OK)
+    raise typer.Exit(outcome.exit_code)
+
+
+@app.command("init-config")
+def init_config(
+    output: Annotated[
+        Path, typer.Option("--output", "-o", help="Onde criar o arquivo.", dir_okay=False)
+    ] = Path("config.yaml"),
+    overwrite: Annotated[
+        bool, typer.Option("--overwrite", help="Substitui o arquivo se já existir.")
+    ] = False,
+) -> None:
+    """Cria um config.yaml comentado para você ajustar."""
+    if output.exists() and not overwrite:
+        typer.echo(f"Erro: {output} já existe. Use --overwrite para substituir.", err=True)
+        raise typer.Exit(EXIT_DATA_OR_CONFIG)
+    template = files("fechou").joinpath("templates/config.yaml").read_text(encoding="utf-8")
+    try:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(template, encoding="utf-8")
+    except OSError as exc:
+        typer.echo(f"Erro: não foi possível criar {output}: {exc.strerror}", err=True)
+        raise typer.Exit(EXIT_DATA_OR_CONFIG) from None
+    typer.echo(f"Configuração criada em {output}. Ajuste 'source', 'columns' e 'delivery'.")
+    typer.echo("Depois: fechou validate -c " + str(output))
 
 
 if __name__ == "__main__":  # pragma: no cover

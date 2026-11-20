@@ -1,5 +1,6 @@
 import datetime as dt
-from collections.abc import Sequence
+import os
+from collections.abc import Iterator, Sequence
 from decimal import Decimal
 from pathlib import Path
 
@@ -18,6 +19,46 @@ HEADER = ["Data", "Produto", "Categoria", "Qtd", "Preço", "Vendedor"]
 
 WEEK = Period(dt.date(2026, 11, 9), dt.date(2026, 11, 15))
 NOW = dt.datetime(2026, 11, 16, 10, 30, tzinfo=dt.UTC)
+
+
+def _pdf_available() -> bool:
+    try:
+        import weasyprint  # noqa: F401
+    except OSError:  # pragma: no cover - depends on the machine
+        if os.environ.get("FECHOU_REQUIRE_PDF") == "1":  # CI must not skip silently
+            raise
+        return False
+    return True
+
+
+requires_pdf = pytest.mark.skipif(
+    not _pdf_available(), reason="WeasyPrint native libraries (Pango) not available"
+)
+
+_ENV_VARS = (
+    "GOOGLE_APPLICATION_CREDENTIALS",
+    "SMTP_HOST",
+    "SMTP_PORT",
+    "SMTP_USER",
+    "SMTP_PASSWORD",
+    "SMTP_FROM",
+    "SMTP_SECURITY",
+    "SMTP_TIMEOUT",
+    "TELEGRAM_BOT_TOKEN",
+    "TELEGRAM_CHAT_ID",
+    "LOG_LEVEL",
+    "DATABASE_PATH",
+    "OUTPUT_DIR",
+)
+
+
+@pytest.fixture
+def clean_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[Path]:
+    """Isolated working dir (no stray .env) and no Fechou variables set."""
+    for name in _ENV_VARS:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.chdir(tmp_path)
+    yield tmp_path
 
 
 def sale(
