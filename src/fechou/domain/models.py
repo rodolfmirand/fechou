@@ -8,6 +8,7 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from fechou.domain import parsing
+from fechou.domain.period import Period
 
 
 class SaleRow(BaseModel):
@@ -83,3 +84,53 @@ class ValidationResult:
     @property
     def total(self) -> int:
         return len(self.valid) + len(self.invalid)
+
+
+# --- metrics --------------------------------------------------------------------
+
+
+@dataclass(frozen=True, slots=True)
+class RankedItem:
+    """Revenue aggregated by a dimension (product, category or seller)."""
+
+    name: str
+    revenue: Decimal
+    quantity: int
+    sales_count: int
+    share: Decimal  # fraction of the period revenue, 0..1 (4 decimal places)
+
+
+@dataclass(frozen=True, slots=True)
+class DailyRevenue:
+    date: dt.date
+    revenue: Decimal
+    sales_count: int
+
+
+@dataclass(frozen=True, slots=True)
+class PeriodMetrics:
+    period: Period
+    revenue: Decimal
+    sales_count: int
+    items_sold: int
+    average_ticket: Decimal | None  # None when there are no sales
+    top_products: tuple[RankedItem, ...]
+    by_category: tuple[RankedItem, ...]  # empty when the data has no categories
+    by_seller: tuple[RankedItem, ...]  # empty when the data has no sellers
+    daily: tuple[DailyRevenue, ...]  # every day of the period, zeros included
+    best_day: DailyRevenue | None
+    worst_day: DailyRevenue | None
+
+    @property
+    def is_empty(self) -> bool:
+        return self.sales_count == 0
+
+
+@dataclass(frozen=True, slots=True)
+class ReportMetrics:
+    """Current period, the immediately previous one and the variations."""
+
+    current: PeriodMetrics
+    previous: PeriodMetrics
+    revenue_change: Decimal | None  # fraction (0.125 = +12,5%); None if previous is 0
+    sales_count_change: Decimal | None

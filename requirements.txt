@@ -45,5 +45,6 @@ typing-inspection==0.4.5
     # via pydantic
 tzdata==2026.6
     # via
+    #   fechou (pyproject.toml)
     #   pandas
     #   python-dateutil

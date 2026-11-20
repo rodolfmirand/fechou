@@ -22,12 +22,15 @@ dependencies = [
     "pydantic>=2.7,<3",
     "pandas>=2.2",
     "pyyaml>=6.0",
+    # IANA time zone database for zoneinfo on Windows and slim containers.
+    "tzdata",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pip-tools>=7.4",
     "pytest>=8.0",
+    "freezegun>=1.5",
     "ruff>=0.6",
     "mypy>=1.11",
     "pandas-stubs",

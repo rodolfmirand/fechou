@@ -2,7 +2,7 @@
 
 Relatório semanal automático a partir de planilhas: lê CSV ou Google Sheets, calcula os indicadores da semana, gera um PDF e envia por e-mail ou Telegram.
 
-> 🚧 **Status: em desenvolvimento (Fases 0 e 1 concluídas).** Já existem a leitura de CSV, a validação da planilha (`fechou validate`) e os dados de demonstração. Relatório, PDF e entrega ainda são planejados.
+> 🚧 **Status: em desenvolvimento (Fases 0 a 2 concluídas).** Já existem a leitura de CSV, a validação da planilha (`fechou validate`), os dados de demonstração e o cálculo de período e indicadores (por enquanto só como biblioteca, sem comando próprio). Relatório, PDF e entrega ainda são planejados.
 
 ## Problema
 
@@ -122,6 +122,12 @@ O arquivo `examples/vendas_demo.csv` é **fictício** e reprodutível (semente f
 python scripts/generate_demo_data.py [--start 2026-09-07] [--end 2026-11-15] [--seed 42] [--invalid 6]
 ```
 
+### Período e indicadores
+
+- **Período padrão:** a última semana completa (segunda a domingo) no fuso do relatório (`America/Sao_Paulo` por padrão). Ela é comparada com a semana imediatamente anterior. Com `--start/--end` (no comando `run`, planejado), a comparação é com o mesmo número de dias imediatamente antes.
+- **Indicadores:** faturamento, número de vendas, itens vendidos, ticket médio, top 5 produtos, faturamento por categoria e por vendedor, faturamento por dia, melhor e pior dia, e variação de faturamento e de vendas em relação ao período anterior ("—" quando o anterior é zero).
+- Valores monetários são calculados sem `float` (centavos inteiros). As regras de arredondamento e desempate estão em [`docs/decisions/0004-period-and-metrics-rules.md`](./docs/decisions/0004-period-and-metrics-rules.md).
+
 ### Planejado
 
 Os comandos abaixo ainda **não existem**. Esta seção será atualizada ao longo da implementação.
@@ -136,7 +142,7 @@ fechou init-config [--output config.yaml]
 
 - [x] Fase 0: estrutura do projeto, lint, testes e CI
 - [x] Fase 1: modelos, leitura de CSV, validação e dados de demonstração
-- [ ] Fase 2: cálculo de período e indicadores
+- [x] Fase 2: cálculo de período e indicadores
 - [ ] Fase 3: relatório em PDF e comando `demo`
 - [ ] Fase 4: entrega por e-mail, idempotência e registro de execuções
 - [ ] Fase 5: integração com Google Sheets
