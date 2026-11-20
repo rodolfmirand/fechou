@@ -1,0 +1,116 @@
+name: Weekly report
+
+# Sends last week's report (Mon-Sun, America/Sao_Paulo) every Monday at 08:00.
+# Disabled until the repository variable FECHOU_ENABLED is "true" and the secrets
+# below exist (see README, "Agendamento no GitHub Actions").
+on:
+  schedule:
+    # 08:00 in São Paulo = 11:00 UTC (Brazil has had no DST since 2019).
+    # Without the timezone key, the equivalent would be cron "0 11 * * 1".
+    - cron: "0 8 * * 1"
+      timezone: America/Sao_Paulo
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "Início (AAAA-MM-DD). Vazio = semana passada"
+        required: false
+        default: ""
+      end:
+        description: "Fim (AAAA-MM-DD). Vazio = semana passada"
+        required: false
+        default: ""
+      dry_run:
+        description: "Simular (gera o relatório sem enviar)"
+        type: boolean
+        default: false
+      force:
+        description: "Reenviar mesmo se o período já foi enviado"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Never two runs at the same time (avoids a double send for the same period).
+concurrency:
+  group: weekly-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    name: Generate and send report
+    if: vars.FECHOU_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install WeasyPrint system libraries (Pango)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz-subset0 fonts-dejavu-core
+
+      - name: Install Fechou (locked dependencies)
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install --no-deps .
+
+      # Run history (idempotency) lives in SQLite. The runner is ephemeral, so the
+      # database is carried between runs in the Actions cache (best effort).
+      - name: Restore run history
+        uses: actions/cache/restore@v4
+        with:
+          path: data
+          key: fechou-runs-${{ github.run_id }}
+          restore-keys: fechou-runs-
+
+      - name: Write configuration and credentials from secrets
+        env:
+          FECHOU_CONFIG: ${{ secrets.FECHOU_CONFIG }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          umask 077
+          if [ -z "$FECHOU_CONFIG" ]; then
+            echo "::error::Secret FECHOU_CONFIG (conteúdo do config.yaml) não definido."
+            exit 1
+          fi
+          printf '%s\n' "$FECHOU_CONFIG" > config.yaml
+          if [ -n "$GOOGLE_SERVICE_ACCOUNT_JSON" ]; then
+            mkdir -p secrets
+            printf '%s' "$GOOGLE_SERVICE_ACCOUNT_JSON" > secrets/service-account.json
+          fi
+
+      - name: Run fechou
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ./secrets/service-account.json
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_SECURITY: ${{ secrets.SMTP_SECURITY }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          INPUT_START: ${{ inputs.start }}
+          INPUT_END: ${{ inputs.end }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_FORCE: ${{ inputs.force }}
+        run: |
+          args=(run --config config.yaml)
+          if [ -n "$INPUT_START" ]; then args+=(--start "$INPUT_START"); fi
+          if [ -n "$INPUT_END" ]; then args+=(--end "$INPUT_END"); fi
+          if [ "$INPUT_DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          if [ "$INPUT_FORCE" = "true" ]; then args+=(--force); fi
+          fechou "${args[@]}"
+
+      - name: Save run history
+        if: always() && hashFiles('data/fechou.db') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: data
+          key: fechou-runs-${{ github.run_id }}

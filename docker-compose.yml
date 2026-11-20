@@ -1,0 +1,44 @@
+# Demo of the full flow without any real account:
+#   docker compose up        -> reads the demo CSV, renders the PDF and "sends" it
+#                               to Mailpit; open http://localhost:8025 to see it.
+#   docker compose up again  -> "Nada a fazer" (idempotency; history in a volume)
+#   docker compose down -v   -> stop and erase the run history
+# Real credentials are never read here: no .env file is loaded.
+name: fechou
+
+services:
+  mailpit:
+    image: axllent/mailpit:v1.34
+    ports:
+      - "8025:8025"   # web UI (SMTP on 1025 stays inside the compose network)
+    environment:
+      MP_MAX_MESSAGES: 500
+
+  fechou:
+    build: .
+    image: fechou:local
+    depends_on:
+      mailpit:
+        condition: service_healthy   # the image ships a "mailpit readyz" healthcheck
+    environment:
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      SMTP_SECURITY: none   # Mailpit is a local test server
+      SMTP_FROM: "Fechou <relatorios@exemplo.com>"
+      LOG_LEVEL: INFO
+    # The demo CSV covers 2026-09-07..2026-11-15, so the period is fixed.
+    command:
+      - run
+      - --config
+      - examples/config.example.yaml
+      - --start
+      - "2026-11-09"
+      - --end
+      - "2026-11-15"
+    volumes:
+      - fechou-data:/app/data   # runs table (idempotency)
+      - fechou-out:/app/out     # generated PDFs (also attached to the e-mail)
+
+volumes:
+  fechou-data:
+  fechou-out:

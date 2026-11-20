@@ -2,7 +2,7 @@
 
 Relatório semanal automático a partir de planilhas: lê CSV ou Google Sheets, calcula os indicadores da semana, gera um PDF e envia por e-mail ou Telegram.
 
-> 🚧 **Status: em desenvolvimento (Fases 0 a 5 concluídas).** O fluxo completo já funciona com CSV ou Google Sheets: validação, indicadores, PDF, envio por e-mail (SMTP) com novas tentativas, idempotência e registro das execuções (`fechou run`). Docker e agendamento ainda são planejados.
+> ✅ **Status: MVP concluído.** Funciona com CSV ou Google Sheets: validação, indicadores, PDF, envio por e-mail (SMTP) com novas tentativas, idempotência, registro das execuções, Docker e agendamento semanal no GitHub Actions. Telegram e `.xlsx` são opcionais e ainda não foram feitos.
 
 ![Exemplo de relatório gerado pelo Fechou (dados fictícios)](./docs/exemplo-relatorio.png)
 
@@ -16,18 +16,29 @@ Pequenos negócios registram vendas numa planilha e, toda semana, alguém gasta 
 
 O Fechou automatiza o ciclo inteiro: **ler → validar → calcular → gerar PDF → entregar → registrar**, em horário agendado e sem intervenção manual.
 
-## Funcionalidades planejadas
+## Antes e depois
 
-- Leitura de CSV (modo demo) e de Google Sheets (conta de serviço)
+| | Antes (manual) | Depois (Fechou) |
+|---|---|---|
+| Toda segunda-feira | Abrir a planilha, filtrar a semana, somar, comparar com a anterior, montar o resumo e enviar | O relatório chega por e-mail às 8h |
+| Tempo por semana | ~45 min | ~2 min (ler o e-mail) |
+| Erros de digitação na planilha | Passam despercebidos e distorcem os totais | Linhas inválidas são descartadas e listadas no relatório |
+| Esquecimento ou atraso | Frequente | Agendado; falhas geram alerta no GitHub |
+
+> ⚠️ **Estimativa de demonstração**, não um resultado medido em clientes: cerca de **3 horas por mês** a menos, considerando 45 min por semana de trabalho manual.
+
+## Funcionalidades
+
+- Leitura de CSV (modo demo) e de Google Sheets (conta de serviço, somente leitura)
 - Validação por linha, com bloco de avisos no relatório para dados inválidos
 - Indicadores: faturamento, nº de vendas, ticket médio, top produtos, por categoria e por vendedor, variação vs. semana anterior
 - Relatório em PDF formatado em pt-BR
-- Entrega por e-mail (SMTP) e, opcionalmente, Telegram
-- Execução por linha de comando e agendada
+- Entrega por e-mail (SMTP), com novas tentativas em falhas temporárias
+- Execução por linha de comando, em Docker e agendada (GitHub Actions)
 - Idempotência: não reenvia o mesmo período, salvo com `--force`
 - Modo `demo` que roda sem credenciais e sem enviar nada
 
-## Stack planejada
+## Stack
 
 | Camada | Tecnologia |
 |---|---|
@@ -35,11 +46,41 @@ O Fechou automatiza o ciclo inteiro: **ler → validar → calcular → gerar PD
 | CLI | Typer |
 | Dados | pandas, Pydantic v2 |
 | Configuração | YAML (PyYAML) |
-| Google Sheets | gspread |
+| Google Sheets | gspread + google-auth |
 | Relatório | Jinja2 + WeasyPrint |
 | Persistência | SQLite |
 | Qualidade | pytest, ruff, mypy |
-| Infra | Docker, GitHub Actions |
+| Infra | Docker, GitHub Actions (CI e agendamento) |
+
+## Demonstração em 1 minuto (Docker)
+
+Sem instalar Python nem criar contas. Só é preciso o [Docker](https://docs.docker.com/get-docker/):
+
+```bash
+docker compose up --build
+```
+
+O que acontece:
+
+1. A imagem do Fechou é construída (Python 3.12, WeasyPrint e fontes já incluídos).
+2. Sobe o [Mailpit](https://mailpit.axllent.org/), um servidor de e-mail de teste que **não envia nada para fora**.
+3. O Fechou lê o CSV fictício de `examples/`, valida, calcula os indicadores de 09/11/2026 a 15/11/2026, gera o PDF e o envia ao Mailpit.
+4. Abra **http://localhost:8025**: o e-mail está lá, com o resumo no corpo e o PDF anexado.
+
+Rode `docker compose up` de novo: como esse período já foi enviado, o Fechou responde "Nada a fazer" (idempotência). Para recomeçar do zero, use `docker compose down -v`. Para só gerar um PDF de demonstração, sem e-mail: `docker compose run --rm fechou demo`.
+
+Para usar a imagem com a sua planilha, monte a configuração, a chave e o volume de dados:
+
+```bash
+docker build -t fechou .
+docker run --rm --env-file .env \
+  -v "$PWD/config.yaml:/app/config.yaml:ro" \
+  -v "$PWD/secrets:/app/secrets:ro" \
+  -v fechou-data:/app/data \
+  fechou run -c config.yaml
+```
+
+A imagem roda com um usuário sem privilégios (UID 1000) e não contém segredos: o `.env`, a pasta `secrets/` e o `config.yaml` ficam de fora (`.dockerignore`).
 
 ## Desenvolvimento
 
@@ -94,7 +135,7 @@ Detalhes em [`docs/decisions/0001-dependency-locking-with-pip-tools.md`](./docs/
 
 ## Como usar
 
-### Já funciona
+### Comandos
 
 ```text
 fechou --version
@@ -220,6 +261,42 @@ Problemas comuns:
 | `O Google recusou a chave` | A chave foi revogada ou o relógio do computador está errado. Gere uma nova chave |
 | Não aparece a opção de criar chave | Organizações do Google Workspace criadas desde maio de 2024 bloqueiam chaves por padrão (política `iam.disableServiceAccountKeyCreation`). Peça uma exceção ao administrador ou use uma conta Google pessoal |
 
+### Agendamento no GitHub Actions
+
+O workflow [`.github/workflows/weekly-report.yml`](./.github/workflows/weekly-report.yml) roda **toda segunda-feira às 8h (horário de Brasília)** e envia o relatório da semana anterior (segunda a domingo). Não é preciso servidor.
+
+**Horário e fuso.** O cron do GitHub Actions usa UTC por padrão. O workflow usa a opção `timezone: America/Sao_Paulo`, aceita hoje pelo GitHub, então o horário já fica em Brasília:
+
+| Horário desejado (Brasília, UTC-3) | `cron` com `timezone: America/Sao_Paulo` | Equivalente em UTC (sem `timezone`) |
+|---|---|---|
+| Segunda, 08:00 | `0 8 * * 1` | `0 11 * * 1` |
+| Segunda, 07:30 | `30 7 * * 1` | `30 10 * * 1` |
+| Sexta, 18:00 | `0 18 * * 5` | `0 21 * * 5` |
+
+Como o Brasil não tem horário de verão desde 2019, a diferença é sempre de 3 horas. Se o horário de verão voltar, a opção `timezone` acompanha a mudança; um cron em UTC, não.
+
+**Como ativar** (em *Settings > Secrets and variables > Actions* do repositório):
+
+1. Em **Variables**, crie `FECHOU_ENABLED` = `true`. Sem ela, o workflow não faz nada, o que evita falhas em forks e no repositório de portfólio.
+2. Em **Secrets**, crie:
+
+   | Secret | Conteúdo |
+   |---|---|
+   | `FECHOU_CONFIG` | O conteúdo inteiro do seu `config.yaml` (use a fonte `google_sheets`) |
+   | `GOOGLE_SERVICE_ACCOUNT_JSON` | O conteúdo inteiro da chave JSON da conta de serviço |
+   | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURITY`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Como no `.env` (veja "Envio por e-mail") |
+
+3. Teste em *Actions > Weekly report > Run workflow*, marcando **Simular** (`--dry-run`). O mesmo botão aceita período (`start`/`end`) e **Reenviar** (`--force`).
+
+Bom saber:
+
+- Se a execução falhar (código 1 ou 2), o job fica vermelho e o GitHub avisa por e-mail quem configurou o workflow.
+- O GitHub pode **atrasar** execuções agendadas em horários de pico e, com carga muito alta, até descartá-las. Se a pontualidade for crítica, use outro agendador.
+- Em repositórios **públicos**, o GitHub desativa workflows agendados após **60 dias sem atividade** no repositório.
+- O histórico de execuções (SQLite) é guardado no cache do Actions entre uma execução e outra. Isso evita reenviar a mesma semana quando alguém roda o workflow de novo, mas o cache é **melhor esforço**: o GitHub apaga caches sem uso há 7 dias. Se o histórico se perder, a semana seguinte é enviada normalmente; só um reenvio manual da mesma semana deixaria de ser bloqueado. Duas execuções nunca rodam ao mesmo tempo (`concurrency`).
+
+**Outras formas de agendar.** Em um servidor ou computador sempre ligado, use o cron do sistema (`0 8 * * 1 cd /caminho/fechou && .venv/bin/fechou run -c config.yaml`, no fuso do servidor) ou o Agendador de Tarefas do Windows. O código de saída (`0`, `1` ou `2`) indica o resultado.
+
 ### Configuração
 
 Gere um modelo com `fechou init-config` ou copie [`examples/config.example.yaml`](./examples/config.example.yaml) e ajuste. Caminhos relativos são resolvidos a partir da pasta do arquivo de configuração. A seção `columns` liga os nomes internos (`date`, `product`, `category`, `quantity`, `unit_price`, `seller`) aos nomes das colunas da sua planilha. `category` e `seller` são opcionais.
@@ -250,10 +327,11 @@ O PDF de exemplo em `docs/` (data fixa, 16/11/2026) é regenerado com `python sc
 - **Indicadores:** faturamento, número de vendas, itens vendidos, ticket médio, top 5 produtos, faturamento por categoria e por vendedor, faturamento por dia, melhor e pior dia, e variação de faturamento e de vendas em relação ao período anterior ("—" quando o anterior é zero).
 - Valores monetários são calculados sem `float` (centavos inteiros). As regras de arredondamento e desempate estão em [`docs/decisions/0004-period-and-metrics-rules.md`](./docs/decisions/0004-period-and-metrics-rules.md).
 
-### Planejado
+### Ainda não implementado (opcionais)
 
-- Docker, `docker compose` com Mailpit e agendamento (Fase 6).
-- Telegram (opcional).
+- Entrega por Telegram. Hoje, `delivery.telegram.enabled: true` gera um erro claro de "ainda não disponível".
+- Leitura de `.xlsx`.
+- Alerta de falha por Telegram. Por enquanto, o aviso de falha vem do próprio agendador (job vermelho no GitHub Actions).
 
 ## Roadmap
 
@@ -263,14 +341,17 @@ O PDF de exemplo em `docs/` (data fixa, 16/11/2026) é regenerado com `python sc
 - [x] Fase 3: relatório em PDF e comando `demo`
 - [x] Fase 4: entrega por e-mail, idempotência e registro de execuções
 - [x] Fase 5: integração com Google Sheets
-- [ ] Fase 6: Docker, agendamento e documentação final
+- [x] Fase 6: Docker, agendamento e documentação final
+- [ ] GIF de demonstração de 30 a 60 s (roteiro em [`docs/portfolio.md`](./docs/portfolio.md))
+- [ ] Opcional: Telegram, `.xlsx` e alerta de falha
 
-## Limitações previstas
+## Limitações
 
 - Sem interface web nem múltiplos usuários.
 - Duas execuções **simultâneas** do mesmo período podem enviar em dobro. Com um único agendador isso não ocorre (veja a decisão 0006).
-- Suporte a `.xlsx` fica como item opcional.
-- Números de "tempo economizado" que aparecerem aqui serão **estimativas de demonstração**, não resultados medidos em clientes.
+- Lê uma aba por configuração; para várias lojas, use um `config.yaml` (com `id` próprio) para cada.
+- No GitHub Actions, o histórico de execuções depende do cache (veja "Agendamento no GitHub Actions").
+- Os números de "Antes e depois" são **estimativas de demonstração**, não resultados medidos em clientes.
 
 ## Decisões técnicas
 

@@ -50,3 +50,19 @@ jobs:
         env:
           FECHOU_REQUIRE_PDF: "1"  # fail instead of skipping PDF tests
         run: pytest
+
+  docker:
+    name: Docker image (demo)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build --tag fechou:ci .
+
+      - name: Run demo inside the image
+        run: |
+          mkdir -p out && chmod 777 out
+          docker run --rm --volume "$PWD/out:/app/out" fechou:ci demo
+          ls -l out
+          test -n "$(find out -name 'fechou_*.pdf' -size +10k)"

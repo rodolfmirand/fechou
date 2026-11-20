@@ -1,0 +1,23 @@
+# Only what the image needs: pyproject, README/LICENSE (package metadata),
+# lockfile, src/ and examples/. Never secrets or local state.
+.git
+.github
+.venv
+venv
+**/__pycache__
+.mypy_cache
+.pytest_cache
+.ruff_cache
+build
+dist
+*.egg-info
+.env
+.env.*
+secrets
+data
+out
+config.yaml
+PROJETO.md
+docs
+tests
+scripts
