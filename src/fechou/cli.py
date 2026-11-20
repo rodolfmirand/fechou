@@ -12,10 +12,10 @@ import typer
 
 from fechou import __version__
 from fechou.clock import SystemClock
-from fechou.config import load_config
+from fechou.config import AppConfig, GoogleSheetsSourceConfig, load_config
 from fechou.demo import run_demo
 from fechou.errors import FechouError
-from fechou.extract import build_source
+from fechou.extract import Source, build_source
 from fechou.logging_setup import configure_logging
 from fechou.render.pdf import render_summary_text
 from fechou.runner import (
@@ -26,7 +26,7 @@ from fechou.runner import (
     build_deliveries,
     execute_run,
 )
-from fechou.settings import load_settings
+from fechou.settings import Settings, load_settings
 from fechou.storage.runs import RunStore
 from fechou.transform.validate import validate_rows
 
@@ -89,6 +89,14 @@ def main(
     _safe_console()
 
 
+def _build_source(app_config: AppConfig, settings: Settings | None = None) -> Source:
+    """Only Google Sheets needs the environment (``GOOGLE_APPLICATION_CREDENTIALS``)."""
+    if not isinstance(app_config.source, GoogleSheetsSourceConfig):
+        return build_source(app_config)
+    settings = settings or load_settings()
+    return build_source(app_config, settings.google_application_credentials)
+
+
 @app.command()
 def validate(config: ConfigOption = Path("config.yaml")) -> None:
     """Valida a planilha e lista as linhas com problema, sem gerar nem enviar nada.
@@ -98,7 +106,7 @@ def validate(config: ConfigOption = Path("config.yaml")) -> None:
     """
     try:
         app_config = load_config(config)
-        source = build_source(app_config)
+        source = _build_source(app_config)
         result = validate_rows(source.read(), app_config.columns)
     except FechouError as error:
         raise _fail(error) from None
@@ -179,6 +187,7 @@ def run(
         settings = load_settings()
         configure_logging(run_id, settings.log_level)
         app_config = load_config(config)
+        source = _build_source(app_config, settings)
         deliveries = [] if dry_run else build_deliveries(app_config, settings)
         store = RunStore(settings.database_path)
     except FechouError as error:
@@ -195,6 +204,7 @@ def run(
         outcome = execute_run(
             app_config,
             options,
+            source=source,
             deliveries=deliveries,
             store=store,
             clock=SystemClock(),

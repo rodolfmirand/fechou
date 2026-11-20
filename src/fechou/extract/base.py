@@ -5,15 +5,21 @@ from typing import Protocol
 import pandas as pd
 
 # A raw table keeps the spreadsheet headers and holds every cell as ``str``
-# (empty cells are ""). Row ``i`` (0-based) is spreadsheet line ``i + 2``,
-# because line 1 is the header.
+# (empty cells are ""). Row ``i`` (0-based) is spreadsheet line
+# ``header_line + 1 + i``. The header is on line 1 unless the source stores
+# another line in ``table.attrs[HEADER_LINE_ATTR]`` (e.g. a Sheets range "A3:F").
 RawTable = pd.DataFrame
 
 HEADER_LINE = 1
+HEADER_LINE_ATTR = "header_line"
 
 
-def line_number(row_index: int) -> int:
-    return row_index + HEADER_LINE + 1
+def header_line(table: RawTable) -> int:
+    return int(table.attrs.get(HEADER_LINE_ATTR, HEADER_LINE))
+
+
+def line_number(row_index: int, header: int = HEADER_LINE) -> int:
+    return row_index + header + 1
 
 
 class Source(Protocol):

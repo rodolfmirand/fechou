@@ -2,7 +2,7 @@
 
 Relatório semanal automático a partir de planilhas: lê CSV ou Google Sheets, calcula os indicadores da semana, gera um PDF e envia por e-mail ou Telegram.
 
-> 🚧 **Status: em desenvolvimento (Fases 0 a 4 concluídas).** O fluxo completo com CSV já funciona: validação, indicadores, PDF, envio por e-mail (SMTP) com novas tentativas, idempotência e registro das execuções (`fechou run`). Google Sheets, Docker e agendamento ainda são planejados.
+> 🚧 **Status: em desenvolvimento (Fases 0 a 5 concluídas).** O fluxo completo já funciona com CSV ou Google Sheets: validação, indicadores, PDF, envio por e-mail (SMTP) com novas tentativas, idempotência e registro das execuções (`fechou run`). Docker e agendamento ainda são planejados.
 
 ![Exemplo de relatório gerado pelo Fechou (dados fictícios)](./docs/exemplo-relatorio.png)
 
@@ -180,6 +180,46 @@ Os destinatários e o assunto ficam no `config.yaml` (`delivery.email`). O assun
 
 Para testar sem enviar e-mails de verdade, aponte para um servidor SMTP de testes local (por exemplo, o Mailpit) com `SMTP_SECURITY=none`. Um `docker-compose` com Mailpit está planejado para a Fase 6.
 
+### Ler do Google Sheets
+
+O Fechou lê a planilha com uma **conta de serviço** do Google: um "usuário robô" com e-mail próprio, que só enxerga as planilhas compartilhadas com ele. O acesso é **somente leitura**. Faça isto uma vez:
+
+1. **Projeto e API.** No [Google Cloud Console](https://console.cloud.google.com/), crie (ou escolha) um projeto. Em **APIs e serviços > Biblioteca**, ative a **Google Sheets API**. A Google Drive API **não** é necessária, porque o Fechou abre a planilha pelo ID.
+2. **Conta de serviço.** Em **IAM e administrador > Contas de serviço**, clique em **Criar conta de serviço**. Basta um nome (ex.: `fechou`); ela não precisa de nenhum papel no projeto.
+3. **Chave JSON.** Abra a conta criada, vá na aba **Chaves**, clique em **Adicionar chave > Criar nova chave**, escolha **JSON** e clique em **Criar**. O arquivo é baixado **uma única vez**.
+4. **Guarde a chave fora do Git.** Salve como `secrets/service-account.json` (a pasta `secrets/` está no `.gitignore`) e aponte no `.env`:
+   ```dotenv
+   GOOGLE_APPLICATION_CREDENTIALS=./secrets/service-account.json
+   ```
+5. **Compartilhe a planilha.** Copie o `client_email` do JSON (algo como `fechou@seu-projeto.iam.gserviceaccount.com`). Na planilha, clique em **Compartilhar**, cole esse e-mail e dê permissão de **Leitor**. Sem isso a leitura falha.
+6. **Configure a fonte** no `config.yaml`:
+   ```yaml
+   source:
+     id: minha-loja
+     type: google_sheets
+     spreadsheet_id: "https://docs.google.com/spreadsheets/d/1AbC...xyz/edit"   # URL ou só o ID
+     worksheet: "Vendas"     # nome exato da aba
+     # range: "A1:F"         # opcional; a 1ª linha do intervalo é o cabeçalho
+   ```
+7. **Teste:** `fechou validate -c config.yaml`. A saída mostra `Fonte: minha-loja (google_sheets)` e as linhas com problema.
+
+Como a planilha é lida:
+
+- As células são lidas **sem formatação**, então o resultado não depende do idioma da planilha. Uma data mostrada como `05/11/2026` (pt-BR) ou `11/5/2026` (en-US) vira o mesmo dia. Valores numéricos vêm como números, e células digitadas como texto passam pelas mesmas regras do CSV (tabela abaixo).
+- Linhas em branco no topo são ignoradas: o cabeçalho é a primeira linha preenchida. Os avisos citam o número real da linha na planilha.
+- Erros temporários do Google (limite de requisições, indisponibilidade) geram até 3 novas tentativas, com esperas de 2 s, 4 s e 8 s.
+
+Problemas comuns:
+
+| Mensagem | O que fazer |
+|---|---|
+| `... não tem acesso à planilha` | Compartilhe a planilha com o `client_email` da chave (Leitor) |
+| `Planilha '...' não encontrada` | Confira o `spreadsheet_id` (o trecho entre `/d/` e `/edit` na URL) e o compartilhamento |
+| `Aba '...' não encontrada` | Use o nome exato da aba; a mensagem lista as abas existentes |
+| `A Google Sheets API não está ativada` | Ative a API no mesmo projeto da conta de serviço (passo 1) |
+| `O Google recusou a chave` | A chave foi revogada ou o relógio do computador está errado. Gere uma nova chave |
+| Não aparece a opção de criar chave | Organizações do Google Workspace criadas desde maio de 2024 bloqueiam chaves por padrão (política `iam.disableServiceAccountKeyCreation`). Peça uma exceção ao administrador ou use uma conta Google pessoal |
+
 ### Configuração
 
 Gere um modelo com `fechou init-config` ou copie [`examples/config.example.yaml`](./examples/config.example.yaml) e ajuste. Caminhos relativos são resolvidos a partir da pasta do arquivo de configuração. A seção `columns` liga os nomes internos (`date`, `product`, `category`, `quantity`, `unit_price`, `seller`) aos nomes das colunas da sua planilha. `category` e `seller` são opcionais.
@@ -191,6 +231,8 @@ Formatos aceitos nas células:
 | Data | `12/11/2026`, `2026-11-12` | `31/02/2026`, `12-11-2026` |
 | Quantidade | inteiro > 0 | `0`, `-1`, `2,5` |
 | Preço | `49,90`, `49.90`, `R$ 1.234,56`, `1,234.56` | negativos, texto, mais de 2 casas (`1.234` é ambíguo) |
+
+No Google Sheets, células formatadas como data ou número dispensam essas regras (veja acima); elas valem para células digitadas como texto.
 
 ### Dados de demonstração
 
@@ -210,7 +252,6 @@ O PDF de exemplo em `docs/` (data fixa, 16/11/2026) é regenerado com `python sc
 
 ### Planejado
 
-- Fonte `google_sheets` (Fase 5). Hoje, uma configuração com esse tipo é aceita, mas a leitura informa que ainda não está disponível.
 - Docker, `docker compose` com Mailpit e agendamento (Fase 6).
 - Telegram (opcional).
 
@@ -221,7 +262,7 @@ O PDF de exemplo em `docs/` (data fixa, 16/11/2026) é regenerado com `python sc
 - [x] Fase 2: cálculo de período e indicadores
 - [x] Fase 3: relatório em PDF e comando `demo`
 - [x] Fase 4: entrega por e-mail, idempotência e registro de execuções
-- [ ] Fase 5: integração com Google Sheets
+- [x] Fase 5: integração com Google Sheets
 - [ ] Fase 6: Docker, agendamento e documentação final
 
 ## Limitações previstas

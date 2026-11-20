@@ -7,9 +7,12 @@ source:
   type: csv               # csv | google_sheets
   path: examples/vendas_demo.csv
   delimiter: ","          # use ";" para CSV exportado do Excel em português
-  # type google_sheets:
-  # spreadsheet_id: "..."
-  # worksheet: "Vendas"
+  # Para ler do Google Sheets, troque as linhas type/path/delimiter por:
+  # type: google_sheets
+  # spreadsheet_id: "1AbC...xyz"   # ID ou URL completa da planilha
+  # worksheet: "Vendas"            # nome exato da aba
+  # range: "A1:F"                  # opcional; a 1ª linha do intervalo é o cabeçalho
+  # (e defina GOOGLE_APPLICATION_CREDENTIALS no .env; veja o README)
 
 columns:                  # nome interno: nome da coluna na sua planilha
   date: "Data"

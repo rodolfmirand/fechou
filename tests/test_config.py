@@ -66,6 +66,40 @@ def test_google_sheets_source(tmp_path: Path) -> None:
     assert config.source.range is None
 
 
+def _sheets(**fields: str) -> dict[str, object]:
+    data = _base()
+    data["source"] = {"id": "loja", "type": "google_sheets", "worksheet": "Vendas", **fields}
+    return data
+
+
+def test_google_sheets_accepts_full_url_and_normalizes_range(tmp_path: Path) -> None:
+    url = "https://docs.google.com/spreadsheets/d/1AbC-dEf_123/edit?gid=0#gid=0"
+
+    config = parse_config(_sheets(spreadsheet_id=url, range=" b3:g "), base_dir=tmp_path)
+
+    assert isinstance(config.source, GoogleSheetsSourceConfig)
+    assert config.source.spreadsheet_id == "1AbC-dEf_123"
+    assert config.source.range == "B3:G"
+
+
+@pytest.mark.parametrize(
+    ("fields", "expected"),
+    [
+        ({"spreadsheet_id": "id com espaço"}, "source.google_sheets.spreadsheet_id: use o ID"),
+        (
+            {"spreadsheet_id": "abc", "range": "Vendas!A1:F"},
+            "source.google_sheets.range: use um intervalo A1 sem o nome da aba",
+        ),
+        ({"spreadsheet_id": "abc", "range": "A1:F:G"}, "use um intervalo A1"),
+    ],
+)
+def test_google_sheets_invalid_fields(
+    tmp_path: Path, fields: dict[str, str], expected: str
+) -> None:
+    with pytest.raises(ConfigError, match=expected):
+        parse_config(_sheets(**fields), base_dir=tmp_path)
+
+
 @pytest.mark.parametrize(
     ("mutate", "expected"),
     [

@@ -17,7 +17,7 @@ from fechou.deliver.base import Delivery, DeliveryError, ReportMessage, send_wit
 from fechou.deliver.smtp import SmtpDelivery
 from fechou.domain.period import Period, resolve_period
 from fechou.errors import ConfigError, FechouError
-from fechou.extract import build_source
+from fechou.extract.base import Source
 from fechou.logging_setup import get_logger
 from fechou.pipeline import build_report_data, report_filename
 from fechou.render import formatting as fmt
@@ -82,6 +82,7 @@ def execute_run(
     config: AppConfig,
     options: RunOptions,
     *,
+    source: Source,
     deliveries: Sequence[Delivery],
     store: RunStore,
     clock: Clock,
@@ -153,7 +154,7 @@ def execute_run(
     rows_total: int | None = None
     rows_invalid: int | None = None
     try:
-        validation = validate_rows(build_source(config).read(), config.columns)
+        validation = validate_rows(source.read(), config.columns)
         rows_total, rows_invalid = validation.total, len(validation.invalid)
         log.info("source_read", extra={"rows_total": rows_total, "rows_invalid": rows_invalid})
 

@@ -28,6 +28,8 @@ dependencies = [
     "jinja2>=3.1",
     "weasyprint>=62",
     "babel>=2.14",
+    "gspread>=6.1,<7",
+    "google-auth>=2.30",
 ]
 
 [project.optional-dependencies]

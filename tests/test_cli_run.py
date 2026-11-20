@@ -14,7 +14,9 @@ from typer.testing import CliRunner
 from fechou import cli
 from fechou.clock import FixedClock
 from fechou.config import load_config
+from fechou.extract import google_sheets
 from tests.conftest import EXAMPLES_DIR, requires_pdf
+from tests.test_google_sheets import NOV_9, sheet_with
 
 CONFIG = str(EXAMPLES_DIR / "config.example.yaml")
 CLOCK = FixedClock(dt.datetime(2026, 11, 18, 12, 0, tzinfo=dt.UTC))
@@ -163,3 +165,78 @@ class TestInitConfig:
 
         assert result.exit_code == cli.EXIT_OK
         assert target.exists()
+
+
+SHEETS_CONFIG = """\
+source:
+  id: loja-sheets
+  type: google_sheets
+  spreadsheet_id: "https://docs.google.com/spreadsheets/d/1AbC-dEf_123/edit"
+  worksheet: Vendas
+columns: {date: Data, product: Produto, category: Categoria, quantity: Qtd,
+          unit_price: Preço, seller: Vendedor}
+report: {business_name: Loja Sheets}
+delivery:
+  email: {enabled: true, to: [dono@exemplo.com]}
+"""
+
+
+class TestGoogleSheetsCli:
+    @pytest.fixture
+    def sheets_config(self, clean_env: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+        client, _ = sheet_with(
+            [
+                ["Data", "Produto", "Categoria", "Qtd", "Preço", "Vendedor"],
+                [NOV_9, "Camiseta", "Vestuário", 2, 89.9, "Ana"],
+                [NOV_9, "Boné", "Acessórios", 0, 50, "Bruno"],
+            ]
+        )
+        connected: list[Path] = []
+
+        def fake_connect(path: Path) -> google_sheets.SheetsConnection:
+            connected.append(path)
+            return google_sheets.SheetsConnection(client=client, account_email="sa@x.iam")
+
+        monkeypatch.setattr(google_sheets, "connect", fake_connect)
+        monkeypatch.setattr(cli, "SystemClock", lambda: CLOCK)
+        path = clean_env / "config.yaml"
+        path.write_text(SHEETS_CONFIG, encoding="utf-8")
+        return path
+
+    def test_validate_requires_credentials_variable(self, sheets_config: Path) -> None:
+        result = runner.invoke(cli.app, ["validate", "-c", str(sheets_config)])
+
+        assert result.exit_code == cli.EXIT_DATA_OR_CONFIG
+        assert "defina GOOGLE_APPLICATION_CREDENTIALS" in result.stderr
+
+    def test_validate_reads_the_sheet(
+        self, sheets_config: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv("GOOGLE_APPLICATION_CREDENTIALS", "secrets/sa.json")
+
+        result = runner.invoke(cli.app, ["validate", "-c", str(sheets_config)])
+
+        assert result.exit_code == cli.EXIT_DATA_OR_CONFIG  # one invalid line
+        assert "Fonte: loja-sheets (google_sheets)" in result.stdout
+        assert "Válidas: 1" in result.stdout
+        assert "linha 3: Qtd" in result.stdout
+
+    def test_run_fails_fast_without_credentials(self, sheets_config: Path) -> None:
+        result = runner.invoke(cli.app, ["run", "-c", str(sheets_config), "--dry-run"])
+
+        assert result.exit_code == cli.EXIT_DATA_OR_CONFIG
+        assert "GOOGLE_APPLICATION_CREDENTIALS" in result.stderr
+        assert not (sheets_config.parent / "data").exists()
+
+    @requires_pdf
+    def test_run_dry_run_from_sheet(
+        self, sheets_config: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv("GOOGLE_APPLICATION_CREDENTIALS", "secrets/sa.json")
+
+        result = runner.invoke(cli.app, ["run", "-c", str(sheets_config), "--dry-run"])
+
+        assert result.exit_code == cli.EXIT_OK, result.output
+        assert "Faturamento: R$ 179,80" in result.stdout
+        pdfs = list((sheets_config.parent / "out").glob("*.pdf"))
+        assert [pdf.name for pdf in pdfs] == ["fechou_loja-sheets_2026-11-09_2026-11-15.pdf"]

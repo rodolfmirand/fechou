@@ -25,6 +25,9 @@ from fechou.errors import ConfigError
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _HEX_COLOR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 _SOURCE_ID_RE = r"^[a-z0-9][a-z0-9_-]*$"
+_SHEET_URL_RE = re.compile(r"/spreadsheets/d/([A-Za-z0-9_-]+)")
+_SHEET_ID_RE = re.compile(r"[A-Za-z0-9_-]+")
+_A1_RANGE_RE = re.compile(r"[A-Z]{1,3}\d*(:[A-Z]{1,3}\d*)?")
 
 
 class _StrictModel(BaseModel):
@@ -43,9 +46,38 @@ class CsvSourceConfig(_StrictModel):
 class GoogleSheetsSourceConfig(_StrictModel):
     type: Literal["google_sheets"]
     id: Annotated[str, Field(pattern=_SOURCE_ID_RE, max_length=64)]
+    # The ID from the spreadsheet URL; the full URL is also accepted.
     spreadsheet_id: Annotated[str, Field(min_length=1)]
     worksheet: Annotated[str, Field(min_length=1)]
+    # Optional A1 range inside the worksheet (e.g. "A1:F" or "B3:G500"); its
+    # first row must be the header. Defaults to the whole worksheet.
     range: str | None = None
+
+    @field_validator("spreadsheet_id")
+    @classmethod
+    def _extract_id(cls, value: str) -> str:
+        value = value.strip()
+        match = _SHEET_URL_RE.search(value)
+        if match:
+            return match.group(1)
+        if not _SHEET_ID_RE.fullmatch(value):
+            raise ValueError(
+                "use o ID da planilha (o trecho entre '/d/' e '/edit' na URL) ou a URL completa"
+            )
+        return value
+
+    @field_validator("range")
+    @classmethod
+    def _check_range(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        value = value.strip().upper()
+        if not _A1_RANGE_RE.fullmatch(value):
+            raise ValueError(
+                "use um intervalo A1 sem o nome da aba, como 'A1:F' ou 'B3:G500' "
+                "(a aba vai em 'worksheet')"
+            )
+        return value
 
 
 SourceConfig = Annotated[

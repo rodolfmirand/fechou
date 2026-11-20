@@ -10,6 +10,7 @@ from fechou.config import AppConfig, load_config
 from fechou.deliver.base import PermanentDeliveryError, TransientDeliveryError
 from fechou.domain.period import Period
 from fechou.errors import ConfigError
+from fechou.extract import build_source
 from fechou.runner import (
     EXIT_DATA_OR_CONFIG,
     EXIT_DELIVERY,
@@ -59,6 +60,7 @@ def _run(
     outcome = execute_run(
         config,
         options,
+        source=build_source(config),
         deliveries=[delivery],
         store=store,
         clock=CLOCK,
@@ -78,6 +80,7 @@ class TestRun:
         outcome = execute_run(
             config,
             RunOptions(output_dir=tmp_path / "out"),
+            source=build_source(config),
             deliveries=[delivery],
             store=store,
             clock=CLOCK,
@@ -108,6 +111,7 @@ class TestRun:
         outcome = execute_run(
             config,
             RunOptions(output_dir=tmp_path / "out"),
+            source=build_source(config),
             deliveries=[delivery],
             store=store,
             clock=CLOCK,
@@ -138,6 +142,7 @@ class TestRun:
         outcome = execute_run(
             config,
             RunOptions(dry_run=True, output_dir=tmp_path / "out"),
+            source=build_source(config),
             deliveries=[],
             store=store,
             clock=CLOCK,

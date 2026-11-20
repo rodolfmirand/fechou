@@ -11,7 +11,7 @@ from fechou.domain.models import InvalidRow, SaleRow, ValidationResult
 from fechou.domain.parsing import parse_date
 from fechou.domain.period import Period
 from fechou.errors import SchemaError
-from fechou.extract.base import RawTable, line_number
+from fechou.extract.base import RawTable, header_line, line_number
 
 
 def check_schema(table: RawTable, columns: ColumnMapping) -> None:
@@ -47,6 +47,7 @@ def validate_rows(table: RawTable, columns: ColumnMapping) -> ValidationResult:
     mapping = columns.mapped()  # internal field -> header
     fields = list(mapping)
     headers = [mapping[field] for field in fields]
+    header = header_line(table)
 
     valid: list[SaleRow] = []
     invalid: list[InvalidRow] = []
@@ -59,7 +60,7 @@ def validate_rows(table: RawTable, columns: ColumnMapping) -> ValidationResult:
         except ValidationError as exc:
             invalid.append(
                 InvalidRow(
-                    line=line_number(int(row_index)),
+                    line=line_number(int(row_index), header),
                     errors=tuple(_error_message(error, mapping) for error in exc.errors()),
                     date=_try_date(values[fields.index("date")]),
                 )
