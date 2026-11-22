@@ -219,7 +219,7 @@ Funciona com qualquer servidor SMTP. Configure no `.env` (modelo em [`.env.examp
 
 Os destinatários e o assunto ficam no `config.yaml` (`delivery.email`). O assunto aceita `{start}`, `{end}` e `{business}`.
 
-Para testar sem enviar e-mails de verdade, aponte para um servidor SMTP de testes local (por exemplo, o Mailpit) com `SMTP_SECURITY=none`. Um `docker-compose` com Mailpit está planejado para a Fase 6.
+Para testar sem enviar e-mails de verdade, aponte para um servidor SMTP de testes local (por exemplo, o Mailpit) com `SMTP_SECURITY=none`. O `docker compose up` já faz isso (veja "Demonstração em 1 minuto").
 
 ### Ler do Google Sheets
 
